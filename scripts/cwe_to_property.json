@@ -1,0 +1,37 @@
+{
+  "array-bounds-lower": {
+    "cwe": "CWE-125",
+    "name": "Out-of-bounds Read",
+    "description": "Array index below zero"
+  },
+  "array-bounds-upper": {
+    "cwe": "CWE-787",
+    "name": "Out-of-bounds Write",
+    "description": "Array index exceeds buffer size"
+  },
+  "signed-overflow": {
+    "cwe": "CWE-190",
+    "name": "Integer Overflow or Wraparound",
+    "description": "Signed integer arithmetic overflow"
+  },
+  "unsigned-overflow": {
+    "cwe": "CWE-191",
+    "name": "Integer Underflow",
+    "description": "Unsigned integer underflow"
+  },
+  "pointer-overflow": {
+    "cwe": "CWE-476",
+    "name": "NULL Pointer Dereference",
+    "description": "Pointer arithmetic overflow"
+  },
+  "nil-pointer-dereference": {
+    "cwe": "CWE-476",
+    "name": "NULL Pointer Dereference",
+    "description": "Dereferencing a null pointer"
+  },
+  "division-by-zero": {
+    "cwe": "CWE-369",
+    "name": "Divide By Zero",
+    "description": "Division or modulo by zero"
+  }
+}
