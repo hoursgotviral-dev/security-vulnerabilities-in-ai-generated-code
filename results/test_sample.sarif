@@ -1,0 +1,56 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "TestTool",
+          "rules": [
+            {
+              "id": "py/sql-injection",
+              "properties": {
+                "tags": ["security", "correctness", "CWE-89"],
+                "problem.severity": "error"
+              }
+            },
+            {
+              "id": "cpp/buffer-overflow",
+              "properties": {
+                "tags": ["security", "CWE-122"],
+                "problem.severity": "error"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "py/sql-injection",
+          "level": "error",
+          "message": {"text": "SQL query built from user-controlled data"},
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {"uri": "db.py"},
+                "region": {"startLine": 6}
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "cpp/buffer-overflow",
+          "level": "error",
+          "message": {"text": "Buffer overflow in strcpy call"},
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {"uri": "buffer.c"},
+                "region": {"startLine": 5}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

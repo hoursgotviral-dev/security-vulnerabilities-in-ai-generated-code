@@ -1,0 +1,38 @@
+{
+  "heap-buffer-overflow": {
+    "write": {"cwe": "CWE-122", "name": "Heap-based Buffer Overflow"},
+    "read":  {"cwe": "CWE-125", "name": "Out-of-bounds Read"}
+  },
+  "stack-buffer-overflow": {
+    "cwe": "CWE-121",
+    "name": "Stack-based Buffer Overflow"
+  },
+  "global-buffer-overflow": {
+    "cwe": "CWE-787",
+    "name": "Out-of-bounds Write"
+  },
+  "heap-use-after-free": {
+    "cwe": "CWE-416",
+    "name": "Use After Free"
+  },
+  "use-after-return": {
+    "cwe": "CWE-562",
+    "name": "Return of Stack Variable Address"
+  },
+  "UBSan:signed-integer-overflow": {
+    "cwe": "CWE-190",
+    "name": "Integer Overflow or Wraparound"
+  },
+  "UBSan:null-pointer-dereference": {
+    "cwe": "CWE-476",
+    "name": "NULL Pointer Dereference"
+  },
+  "UBSan:shift-exponent": {
+    "cwe": "CWE-190",
+    "name": "Integer Overflow or Wraparound"
+  },
+  "use-of-uninitialized-value": {
+    "cwe": "CWE-457",
+    "name": "Use of Uninitialized Variable"
+  }
+}

@@ -1,0 +1,4 @@
+filename,line,rule,severity,message
+db.py,6,sql-injection,HIGH,User input flows into SQL query without sanitization
+helper.py,12,insecure-random,LOW,Use of random module for security-sensitive operation
+new_file.py,3,hardcoded-password,MEDIUM,Hardcoded password detected in source code
