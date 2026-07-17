@@ -1,12 +1,35 @@
-Tool versions - Day 1
-=====================
-Python 3.14.3
-Apple clang version 14.0.3 (clang-1403.0.22.14.1)
-Target: arm64-apple-darwin22.1.0
-Thread model: posix
-InstalledDir: /Library/Developer/CommandLineTools/usr/bin
-3.39.4 2022-09-07 20:51:41 6bf7a2712125fdc4d559618e3fa3b4944f5a0d8f8a4ae21165610e153f77aapl
-1.165.0
-bandit 1.9.4
-  python version = 3.14.3 (v3.14.3:323c59a5e34, Feb  3 2026, 11:41:37) [Clang 16.0.0 (clang-1600.0.26.6)]
-2.0.20
+Toolchain Version Log - 2026-07-17 11:18:41.632739
+----------------------------------------
+Checking: python
+Python 3.14.0
+----------------------------------------
+Checking: clang
+MISSING: clang is not installed or not in PATH.
+----------------------------------------
+Checking: gcc
+MISSING: gcc is not installed or not in PATH.
+----------------------------------------
+Checking: semgrep
+MISSING: semgrep is not installed or not in PATH.
+----------------------------------------
+Checking: bandit
+MISSING: bandit is not installed or not in PATH.
+----------------------------------------
+Checking: eslint
+MISSING: eslint is not installed or not in PATH.
+----------------------------------------
+Checking: flawfinder
+MISSING: flawfinder is not installed or not in PATH.
+----------------------------------------
+Checking: cbmc
+MISSING: cbmc is not installed or not in PATH.
+----------------------------------------
+Checking: klee
+MISSING: klee is not installed or not in PATH.
+----------------------------------------
+Checking: afl-clang-fast
+MISSING: afl-clang-fast is not installed or not in PATH.
+----------------------------------------
+Checking: codeql
+MISSING: codeql is not installed or not in PATH.
+----------------------------------------

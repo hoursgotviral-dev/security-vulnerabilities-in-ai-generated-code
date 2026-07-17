@@ -1,0 +1,5 @@
+source,model,language,total_programs,final_analyzed,stage2_kappa_score
+SYNTHETIC,claude-sonnet,C,41,41,0.85
+SYNTHETIC,deepseek-coder,C,41,41,0.85
+SYNTHETIC,gemini-2.5-pro,C,41,41,0.85
+SYNTHETIC,gpt-4o,C,41,41,0.85
