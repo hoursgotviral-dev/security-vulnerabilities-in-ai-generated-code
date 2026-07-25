@@ -2,9 +2,9 @@
 research_env/
 __pycache__/
 *.pyc
-corpus.db
 test_programs/afl_out/
 *.o
 *.out
 codeql/
 codeql-bundle-linux64.tar.gz
+
