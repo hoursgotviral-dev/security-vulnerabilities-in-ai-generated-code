@@ -8,3 +8,4 @@ test_programs/afl_out/
 codeql/
 codeql-bundle-linux64.tar.gz
 
+corpus.db
