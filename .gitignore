@@ -1,6 +1,5 @@
 .env
 research_env/
-linux_env/
 __pycache__/
 *.pyc
 test_programs/afl_out/
@@ -9,8 +8,9 @@ test_programs/afl_out/
 codeql/
 codeql-bundle-linux64.tar.gz
 corpus.db
-corpus.zip
-*.db
 .DS_Store
 *.bak
+linux_env/
+corpus.zip
+*.db
 *.swp
