@@ -1,28 +1,16 @@
-# Environments
+.env
 research_env/
 linux_env/
 __pycache__/
 *.pyc
-
-# Secrets
-.env
-
-# Database files (too large for GitHub)
-*.db
-corpus.db
-corpus.zip
-
-# Build artifacts
+test_programs/afl_out/
 *.o
 *.out
-
-# Analysis outputs
-test_programs/afl_out/
 codeql/
 codeql-bundle-linux64.tar.gz
-
-# OS
+corpus.db
+corpus.zip
+*.db
 .DS_Store
-
-# Editor swap files
+*.bak
 *.swp
