@@ -14,3 +14,5 @@ linux_env/
 corpus.zip
 *.db
 *.swp
+*.log
+scripts/_*.py

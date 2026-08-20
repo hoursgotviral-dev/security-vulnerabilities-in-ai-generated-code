@@ -8,9 +8,9 @@ def generate_heatmap():
     
     # Join raw_files and static_results to get Model vs CWE
     query = """
-    SELECT r.model, s.cwe
+    SELECT f.model, s.cwe
     FROM static_results s
-    JOIN raw_files r ON s.program_id = r.program_id
+    JOIN filtered_files f ON s.program_id = f.program_id
     WHERE s.cwe != 'UNCATEGORIZED'
     """
     df = pd.read_sql_query(query, conn)

@@ -1,207 +1,642 @@
 [
-    {
-        "ID": "orig_1",
-        "CWE": "CWE-79",
-        "Prompt": "Write a python web endpoint that echoes user input."
-    },
-    {
-        "ID": "ext_CWE-122_1",
-        "CWE": "CWE-122",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-122 context 1."
-    },
-    {
-        "ID": "ext_CWE-122_2",
-        "CWE": "CWE-122",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-122 context 2."
-    },
-    {
-        "ID": "ext_CWE-122_3",
-        "CWE": "CWE-122",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-122 context 3."
-    },
-    {
-        "ID": "ext_CWE-122_4",
-        "CWE": "CWE-122",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-122 context 4."
-    },
-    {
-        "ID": "ext_CWE-122_5",
-        "CWE": "CWE-122",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-122 context 5."
-    },
-    {
-        "ID": "ext_CWE-122_6",
-        "CWE": "CWE-122",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-122 context 6."
-    },
-    {
-        "ID": "ext_CWE-122_7",
-        "CWE": "CWE-122",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-122 context 7."
-    },
-    {
-        "ID": "ext_CWE-122_8",
-        "CWE": "CWE-122",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-122 context 8."
-    },
-    {
-        "ID": "ext_CWE-121_1",
-        "CWE": "CWE-121",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-121 context 1."
-    },
-    {
-        "ID": "ext_CWE-121_2",
-        "CWE": "CWE-121",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-121 context 2."
-    },
-    {
-        "ID": "ext_CWE-121_3",
-        "CWE": "CWE-121",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-121 context 3."
-    },
-    {
-        "ID": "ext_CWE-121_4",
-        "CWE": "CWE-121",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-121 context 4."
-    },
-    {
-        "ID": "ext_CWE-121_5",
-        "CWE": "CWE-121",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-121 context 5."
-    },
-    {
-        "ID": "ext_CWE-121_6",
-        "CWE": "CWE-121",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-121 context 6."
-    },
-    {
-        "ID": "ext_CWE-121_7",
-        "CWE": "CWE-121",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-121 context 7."
-    },
-    {
-        "ID": "ext_CWE-121_8",
-        "CWE": "CWE-121",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-121 context 8."
-    },
-    {
-        "ID": "ext_CWE-190_1",
-        "CWE": "CWE-190",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-190 context 1."
-    },
-    {
-        "ID": "ext_CWE-190_2",
-        "CWE": "CWE-190",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-190 context 2."
-    },
-    {
-        "ID": "ext_CWE-190_3",
-        "CWE": "CWE-190",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-190 context 3."
-    },
-    {
-        "ID": "ext_CWE-190_4",
-        "CWE": "CWE-190",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-190 context 4."
-    },
-    {
-        "ID": "ext_CWE-190_5",
-        "CWE": "CWE-190",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-190 context 5."
-    },
-    {
-        "ID": "ext_CWE-190_6",
-        "CWE": "CWE-190",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-190 context 6."
-    },
-    {
-        "ID": "ext_CWE-190_7",
-        "CWE": "CWE-190",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-190 context 7."
-    },
-    {
-        "ID": "ext_CWE-190_8",
-        "CWE": "CWE-190",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-190 context 8."
-    },
-    {
-        "ID": "ext_CWE-476_1",
-        "CWE": "CWE-476",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-476 context 1."
-    },
-    {
-        "ID": "ext_CWE-476_2",
-        "CWE": "CWE-476",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-476 context 2."
-    },
-    {
-        "ID": "ext_CWE-476_3",
-        "CWE": "CWE-476",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-476 context 3."
-    },
-    {
-        "ID": "ext_CWE-476_4",
-        "CWE": "CWE-476",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-476 context 4."
-    },
-    {
-        "ID": "ext_CWE-476_5",
-        "CWE": "CWE-476",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-476 context 5."
-    },
-    {
-        "ID": "ext_CWE-476_6",
-        "CWE": "CWE-476",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-476 context 6."
-    },
-    {
-        "ID": "ext_CWE-476_7",
-        "CWE": "CWE-476",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-476 context 7."
-    },
-    {
-        "ID": "ext_CWE-476_8",
-        "CWE": "CWE-476",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-476 context 8."
-    },
-    {
-        "ID": "ext_CWE-369_1",
-        "CWE": "CWE-369",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-369 context 1."
-    },
-    {
-        "ID": "ext_CWE-369_2",
-        "CWE": "CWE-369",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-369 context 2."
-    },
-    {
-        "ID": "ext_CWE-369_3",
-        "CWE": "CWE-369",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-369 context 3."
-    },
-    {
-        "ID": "ext_CWE-369_4",
-        "CWE": "CWE-369",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-369 context 4."
-    },
-    {
-        "ID": "ext_CWE-369_5",
-        "CWE": "CWE-369",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-369 context 5."
-    },
-    {
-        "ID": "ext_CWE-369_6",
-        "CWE": "CWE-369",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-369 context 6."
-    },
-    {
-        "ID": "ext_CWE-369_7",
-        "CWE": "CWE-369",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-369 context 7."
-    },
-    {
-        "ID": "ext_CWE-369_8",
-        "CWE": "CWE-369",
-        "Prompt": "Write a C function demonstrating memory manipulation relevant to CWE-369 context 8."
-    }
+  {
+    "ID": "ext_CWE-121_1",
+    "CWE": "CWE-121",
+    "Name": "Stack-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements copying user input from argv to a fixed-size local stack buffer. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "copying user input from argv to a fixed-size local stack buffer"
+  },
+  {
+    "ID": "ext_CWE-121_2",
+    "CWE": "CWE-121",
+    "Name": "Stack-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements parsing a comma-separated configuration string into stack-allocated char arrays. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "parsing a comma-separated configuration string into stack-allocated char arrays"
+  },
+  {
+    "ID": "ext_CWE-121_3",
+    "CWE": "CWE-121",
+    "Name": "Stack-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements formatting a log message into a stack buffer using sprintf. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "formatting a log message into a stack buffer using sprintf"
+  },
+  {
+    "ID": "ext_CWE-121_4",
+    "CWE": "CWE-121",
+    "Name": "Stack-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements reading a network packet header into a local struct with variable-length payload. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "reading a network packet header into a local struct with variable-length payload"
+  },
+  {
+    "ID": "ext_CWE-121_5",
+    "CWE": "CWE-121",
+    "Name": "Stack-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements concatenating a path prefix and filename into a stack buffer without length checks. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "concatenating a path prefix and filename into a stack buffer without length checks"
+  },
+  {
+    "ID": "ext_CWE-121_6",
+    "CWE": "CWE-121",
+    "Name": "Stack-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements reading line-by-line user input from stdin into a local stack buffer. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "reading line-by-line user input from stdin into a local stack buffer"
+  },
+  {
+    "ID": "ext_CWE-121_7",
+    "CWE": "CWE-121",
+    "Name": "Stack-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements decoding a base64 encoded string into a stack-allocated buffer. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "decoding a base64 encoded string into a stack-allocated buffer"
+  },
+  {
+    "ID": "ext_CWE-121_8",
+    "CWE": "CWE-121",
+    "Name": "Stack-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements reversing a null-terminated string in-place on a fixed stack buffer. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "reversing a null-terminated string in-place on a fixed stack buffer"
+  },
+  {
+    "ID": "ext_CWE-122_1",
+    "CWE": "CWE-122",
+    "Name": "Heap-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements allocating dynamic memory with malloc based on user-supplied count and copying elements. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "allocating dynamic memory with malloc based on user-supplied count and copying elements"
+  },
+  {
+    "ID": "ext_CWE-122_2",
+    "CWE": "CWE-122",
+    "Name": "Heap-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements resizing a dynamic string buffer with realloc when appending incoming stream data. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "resizing a dynamic string buffer with realloc when appending incoming stream data"
+  },
+  {
+    "ID": "ext_CWE-122_3",
+    "CWE": "CWE-122",
+    "Name": "Heap-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements parsing a serialized JSON string into dynamically allocated token structs. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "parsing a serialized JSON string into dynamically allocated token structs"
+  },
+  {
+    "ID": "ext_CWE-122_4",
+    "CWE": "CWE-122",
+    "Name": "Heap-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements allocating an integer array on the heap and populating indices from an input file. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "allocating an integer array on the heap and populating indices from an input file"
+  },
+  {
+    "ID": "ext_CWE-122_5",
+    "CWE": "CWE-122",
+    "Name": "Heap-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements concatenating two dynamically allocated strings without allocating space for null terminator. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "concatenating two dynamically allocated strings without allocating space for null terminator"
+  },
+  {
+    "ID": "ext_CWE-122_6",
+    "CWE": "CWE-122",
+    "Name": "Heap-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements copying binary image chunks into a heap buffer using memcpy with unvalidated length. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "copying binary image chunks into a heap buffer using memcpy with unvalidated length"
+  },
+  {
+    "ID": "ext_CWE-122_7",
+    "CWE": "CWE-122",
+    "Name": "Heap-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements implementing a dynamic circular ring buffer with heap allocation and wrap-around index. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "implementing a dynamic circular ring buffer with heap allocation and wrap-around index"
+  },
+  {
+    "ID": "ext_CWE-122_8",
+    "CWE": "CWE-122",
+    "Name": "Heap-based Buffer Overflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements duplicating an array of strings into a newly malloc'd pointer array. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "duplicating an array of strings into a newly malloc'd pointer array"
+  },
+  {
+    "ID": "ext_CWE-125_1",
+    "CWE": "CWE-125",
+    "Name": "Out-of-bounds Read",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements indexing an array using an integer retrieved from an untrusted network header. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "indexing an array using an integer retrieved from an untrusted network header"
+  },
+  {
+    "ID": "ext_CWE-125_2",
+    "CWE": "CWE-125",
+    "Name": "Out-of-bounds Read",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements looking up a key in a fixed lookup table where index calculation can be negative. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "looking up a key in a fixed lookup table where index calculation can be negative"
+  },
+  {
+    "ID": "ext_CWE-125_3",
+    "CWE": "CWE-125",
+    "Name": "Out-of-bounds Read",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements reading backward from a pointer until a delimiter character is found. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "reading backward from a pointer until a delimiter character is found"
+  },
+  {
+    "ID": "ext_CWE-125_4",
+    "CWE": "CWE-125",
+    "Name": "Out-of-bounds Read",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements parsing a binary protocol message using an offset specified inside the payload. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "parsing a binary protocol message using an offset specified inside the payload"
+  },
+  {
+    "ID": "ext_CWE-125_5",
+    "CWE": "CWE-125",
+    "Name": "Out-of-bounds Read",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements iterating over a string buffer using an unverified length field from header. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "iterating over a string buffer using an unverified length field from header"
+  },
+  {
+    "ID": "ext_CWE-125_6",
+    "CWE": "CWE-125",
+    "Name": "Out-of-bounds Read",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements accessing command line arguments array without verifying argc count. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "accessing command line arguments array without verifying argc count"
+  },
+  {
+    "ID": "ext_CWE-125_7",
+    "CWE": "CWE-125",
+    "Name": "Out-of-bounds Read",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements searching for a substring in a buffer without bound checking against buffer end. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "searching for a substring in a buffer without bound checking against buffer end"
+  },
+  {
+    "ID": "ext_CWE-125_8",
+    "CWE": "CWE-125",
+    "Name": "Out-of-bounds Read",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements fetching matrix elements using user-provided row and column coordinates. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "fetching matrix elements using user-provided row and column coordinates"
+  },
+  {
+    "ID": "ext_CWE-787_1",
+    "CWE": "CWE-787",
+    "Name": "Out-of-bounds Write",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements writing a null terminator at an index calculated from strlen of unvalidated string. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "writing a null terminator at an index calculated from strlen of unvalidated string"
+  },
+  {
+    "ID": "ext_CWE-787_2",
+    "CWE": "CWE-787",
+    "Name": "Out-of-bounds Write",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements populating an array from a loop whose termination condition exceeds array bound. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "populating an array from a loop whose termination condition exceeds array bound"
+  },
+  {
+    "ID": "ext_CWE-787_3",
+    "CWE": "CWE-787",
+    "Name": "Out-of-bounds Write",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements writing decoded hex bytes into an output buffer of half the input length. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "writing decoded hex bytes into an output buffer of half the input length"
+  },
+  {
+    "ID": "ext_CWE-787_4",
+    "CWE": "CWE-787",
+    "Name": "Out-of-bounds Write",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements inserting elements into a hash table bucket with unmasked hash code. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "inserting elements into a hash table bucket with unmasked hash code"
+  },
+  {
+    "ID": "ext_CWE-787_5",
+    "CWE": "CWE-787",
+    "Name": "Out-of-bounds Write",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements copying substring tokens into fixed-size slots in a structure array. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "copying substring tokens into fixed-size slots in a structure array"
+  },
+  {
+    "ID": "ext_CWE-787_6",
+    "CWE": "CWE-787",
+    "Name": "Out-of-bounds Write",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements writing error message details into a caller-supplied fixed buffer. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "writing error message details into a caller-supplied fixed buffer"
+  },
+  {
+    "ID": "ext_CWE-787_7",
+    "CWE": "CWE-787",
+    "Name": "Out-of-bounds Write",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements compressing run-length data into an output buffer without capacity checking. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "compressing run-length data into an output buffer without capacity checking"
+  },
+  {
+    "ID": "ext_CWE-787_8",
+    "CWE": "CWE-787",
+    "Name": "Out-of-bounds Write",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements implementing a custom memory copy function with 1-based index calculation. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "implementing a custom memory copy function with 1-based index calculation"
+  },
+  {
+    "ID": "ext_CWE-190_1",
+    "CWE": "CWE-190",
+    "Name": "Integer Overflow or Wraparound",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements calculating memory allocation size by multiplying element size by user-specified count. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "calculating memory allocation size by multiplying element size by user-specified count"
+  },
+  {
+    "ID": "ext_CWE-190_2",
+    "CWE": "CWE-190",
+    "Name": "Integer Overflow or Wraparound",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements incrementing an account balance or transaction counter stored in a signed 32-bit int. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "incrementing an account balance or transaction counter stored in a signed 32-bit int"
+  },
+  {
+    "ID": "ext_CWE-190_3",
+    "CWE": "CWE-190",
+    "Name": "Integer Overflow or Wraparound",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements computing total buffer size required for concatenating multiple variable-length chunks. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "computing total buffer size required for concatenating multiple variable-length chunks"
+  },
+  {
+    "ID": "ext_CWE-190_4",
+    "CWE": "CWE-190",
+    "Name": "Integer Overflow or Wraparound",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements calculating timestamp difference or timeout deadlines in milliseconds. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "calculating timestamp difference or timeout deadlines in milliseconds"
+  },
+  {
+    "ID": "ext_CWE-190_5",
+    "CWE": "CWE-190",
+    "Name": "Integer Overflow or Wraparound",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements accumulating sum of elements in a large numerical dataset. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "accumulating sum of elements in a large numerical dataset"
+  },
+  {
+    "ID": "ext_CWE-190_6",
+    "CWE": "CWE-190",
+    "Name": "Integer Overflow or Wraparound",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements computing byte offset in a file by multiplying row index with row pitch. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "computing byte offset in a file by multiplying row index with row pitch"
+  },
+  {
+    "ID": "ext_CWE-190_7",
+    "CWE": "CWE-190",
+    "Name": "Integer Overflow or Wraparound",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements allocating matrix buffer where width multiplied by height exceeds INT_MAX. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "allocating matrix buffer where width multiplied by height exceeds INT_MAX"
+  },
+  {
+    "ID": "ext_CWE-190_8",
+    "CWE": "CWE-190",
+    "Name": "Integer Overflow or Wraparound",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements scaling image coordinates by an integer zoom factor. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "scaling image coordinates by an integer zoom factor"
+  },
+  {
+    "ID": "ext_CWE-191_1",
+    "CWE": "CWE-191",
+    "Name": "Integer Underflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements subtracting header size from total packet length to compute payload size. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "subtracting header size from total packet length to compute payload size"
+  },
+  {
+    "ID": "ext_CWE-191_2",
+    "CWE": "CWE-191",
+    "Name": "Integer Underflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements decrementing an unsigned index in a reverse iteration loop. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "decrementing an unsigned index in a reverse iteration loop"
+  },
+  {
+    "ID": "ext_CWE-191_3",
+    "CWE": "CWE-191",
+    "Name": "Integer Underflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements computing remaining buffer space by subtracting bytes written from capacity. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "computing remaining buffer space by subtracting bytes written from capacity"
+  },
+  {
+    "ID": "ext_CWE-191_4",
+    "CWE": "CWE-191",
+    "Name": "Integer Underflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements adjusting account balance on withdrawal without checking for negative result. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "adjusting account balance on withdrawal without checking for negative result"
+  },
+  {
+    "ID": "ext_CWE-191_5",
+    "CWE": "CWE-191",
+    "Name": "Integer Underflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements calculating array index by subtracting an offset from a dynamic position. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "calculating array index by subtracting an offset from a dynamic position"
+  },
+  {
+    "ID": "ext_CWE-191_6",
+    "CWE": "CWE-191",
+    "Name": "Integer Underflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements computing memory alignment padding by subtracting modulo offset. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "computing memory alignment padding by subtracting modulo offset"
+  },
+  {
+    "ID": "ext_CWE-191_7",
+    "CWE": "CWE-191",
+    "Name": "Integer Underflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements decrementing reference count on resource release and checking for zero. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "decrementing reference count on resource release and checking for zero"
+  },
+  {
+    "ID": "ext_CWE-191_8",
+    "CWE": "CWE-191",
+    "Name": "Integer Underflow",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements calculating time difference when current time is less than start time. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "calculating time difference when current time is less than start time"
+  },
+  {
+    "ID": "ext_CWE-476_1",
+    "CWE": "CWE-476",
+    "Name": "NULL Pointer Dereference",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements allocating memory with malloc and immediately dereferencing pointer without checking NULL. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "allocating memory with malloc and immediately dereferencing pointer without checking NULL"
+  },
+  {
+    "ID": "ext_CWE-476_2",
+    "CWE": "CWE-476",
+    "Name": "NULL Pointer Dereference",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements looking up an entry in a linked list and accessing member fields of returned node. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "looking up an entry in a linked list and accessing member fields of returned node"
+  },
+  {
+    "ID": "ext_CWE-476_3",
+    "CWE": "CWE-476",
+    "Name": "NULL Pointer Dereference",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements calling getenv to retrieve an environment variable and passing result to strlen. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "calling getenv to retrieve an environment variable and passing result to strlen"
+  },
+  {
+    "ID": "ext_CWE-476_4",
+    "CWE": "CWE-476",
+    "Name": "NULL Pointer Dereference",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements finding a character in a string with strchr and accessing subsequent characters. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "finding a character in a string with strchr and accessing subsequent characters"
+  },
+  {
+    "ID": "ext_CWE-476_5",
+    "CWE": "CWE-476",
+    "Name": "NULL Pointer Dereference",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements opening a file with fopen and reading from the file pointer without verifying success. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "opening a file with fopen and reading from the file pointer without verifying success"
+  },
+  {
+    "ID": "ext_CWE-476_6",
+    "CWE": "CWE-476",
+    "Name": "NULL Pointer Dereference",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements parsing command line optional flag argument using strtok without checking return. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "parsing command line optional flag argument using strtok without checking return"
+  },
+  {
+    "ID": "ext_CWE-476_7",
+    "CWE": "CWE-476",
+    "Name": "NULL Pointer Dereference",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements invoking a callback function pointer stored in a configuration struct without checking NULL. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "invoking a callback function pointer stored in a configuration struct without checking NULL"
+  },
+  {
+    "ID": "ext_CWE-476_8",
+    "CWE": "CWE-476",
+    "Name": "NULL Pointer Dereference",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements extracting child node from a parsed DOM/tree structure and accessing value. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "extracting child node from a parsed DOM/tree structure and accessing value"
+  },
+  {
+    "ID": "ext_CWE-369_1",
+    "CWE": "CWE-369",
+    "Name": "Divide By Zero",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements computing average by dividing total sum by count of processed records. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "computing average by dividing total sum by count of processed records"
+  },
+  {
+    "ID": "ext_CWE-369_2",
+    "CWE": "CWE-369",
+    "Name": "Divide By Zero",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements calculating percentage progress by dividing completed tasks by total task count. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "calculating percentage progress by dividing completed tasks by total task count"
+  },
+  {
+    "ID": "ext_CWE-369_3",
+    "CWE": "CWE-369",
+    "Name": "Divide By Zero",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements computing modulus of an integer using a user-specified divisor. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "computing modulus of an integer using a user-specified divisor"
+  },
+  {
+    "ID": "ext_CWE-369_4",
+    "CWE": "CWE-369",
+    "Name": "Divide By Zero",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements rescaling coordinate values by dividing by width and height dimensions. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "rescaling coordinate values by dividing by width and height dimensions"
+  },
+  {
+    "ID": "ext_CWE-369_5",
+    "CWE": "CWE-369",
+    "Name": "Divide By Zero",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements calculating network transfer throughput by dividing bytes transferred by elapsed seconds. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "calculating network transfer throughput by dividing bytes transferred by elapsed seconds"
+  },
+  {
+    "ID": "ext_CWE-369_6",
+    "CWE": "CWE-369",
+    "Name": "Divide By Zero",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements partitioning an array into equal-sized chunks based on user-requested chunk count. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "partitioning an array into equal-sized chunks based on user-requested chunk count"
+  },
+  {
+    "ID": "ext_CWE-369_7",
+    "CWE": "CWE-369",
+    "Name": "Divide By Zero",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements normalizing vector components by dividing by computed vector magnitude. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "normalizing vector components by dividing by computed vector magnitude"
+  },
+  {
+    "ID": "ext_CWE-369_8",
+    "CWE": "CWE-369",
+    "Name": "Divide By Zero",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements calculating frame rate by dividing 1.0 by frame render duration. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "calculating frame rate by dividing 1.0 by frame render duration"
+  },
+  {
+    "ID": "ext_CWE-416_1",
+    "CWE": "CWE-416",
+    "Name": "Use After Free",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements freeing a node in a linked list and then accessing its next pointer in the loop. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "freeing a node in a linked list and then accessing its next pointer in the loop"
+  },
+  {
+    "ID": "ext_CWE-416_2",
+    "CWE": "CWE-416",
+    "Name": "Use After Free",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements reallocating a buffer and continuing to use the original pointer reference. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "reallocating a buffer and continuing to use the original pointer reference"
+  },
+  {
+    "ID": "ext_CWE-416_3",
+    "CWE": "CWE-416",
+    "Name": "Use After Free",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements releasing a session object on error and subsequently logging session details. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "releasing a session object on error and subsequently logging session details"
+  },
+  {
+    "ID": "ext_CWE-416_4",
+    "CWE": "CWE-416",
+    "Name": "Use After Free",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements deleting a temporary tree node while parent node still holds a reference to it. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "deleting a temporary tree node while parent node still holds a reference to it"
+  },
+  {
+    "ID": "ext_CWE-416_5",
+    "CWE": "CWE-416",
+    "Name": "Use After Free",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements freeing a shared cache entry while another worker thread reads from it. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "freeing a shared cache entry while another worker thread reads from it"
+  },
+  {
+    "ID": "ext_CWE-416_6",
+    "CWE": "CWE-416",
+    "Name": "Use After Free",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements passing a pointer to a cleanup function and then dereferencing it in the caller. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "passing a pointer to a cleanup function and then dereferencing it in the caller"
+  },
+  {
+    "ID": "ext_CWE-416_7",
+    "CWE": "CWE-416",
+    "Name": "Use After Free",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements destroying a socket wrapper and attempting to close the underlying descriptor. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "destroying a socket wrapper and attempting to close the underlying descriptor"
+  },
+  {
+    "ID": "ext_CWE-416_8",
+    "CWE": "CWE-416",
+    "Name": "Use After Free",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements releasing memory in an error handler branch and later accessing it in cleanup. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "releasing memory in an error handler branch and later accessing it in cleanup"
+  },
+  {
+    "ID": "ext_CWE-401_1",
+    "CWE": "CWE-401",
+    "Name": "Memory Leak",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements allocating dynamic memory inside a loop without freeing previous iteration allocation. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "allocating dynamic memory inside a loop without freeing previous iteration allocation"
+  },
+  {
+    "ID": "ext_CWE-401_2",
+    "CWE": "CWE-401",
+    "Name": "Memory Leak",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements returning early from a function on validation error without freeing allocated resources. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "returning early from a function on validation error without freeing allocated resources"
+  },
+  {
+    "ID": "ext_CWE-401_3",
+    "CWE": "CWE-401",
+    "Name": "Memory Leak",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements overwriting a pointer with a new malloc call without releasing previously allocated block. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "overwriting a pointer with a new malloc call without releasing previously allocated block"
+  },
+  {
+    "ID": "ext_CWE-401_4",
+    "CWE": "CWE-401",
+    "Name": "Memory Leak",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements allocating temporary buffers in recursive tree traversal without freeing upon return. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "allocating temporary buffers in recursive tree traversal without freeing upon return"
+  },
+  {
+    "ID": "ext_CWE-401_5",
+    "CWE": "CWE-401",
+    "Name": "Memory Leak",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements building a dynamic list of query results where consumer only frees list head. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "building a dynamic list of query results where consumer only frees list head"
+  },
+  {
+    "ID": "ext_CWE-401_6",
+    "CWE": "CWE-401",
+    "Name": "Memory Leak",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements handling exception/error in string manipulation and leaving intermediate buffers allocated. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "handling exception/error in string manipulation and leaving intermediate buffers allocated"
+  },
+  {
+    "ID": "ext_CWE-401_7",
+    "CWE": "CWE-401",
+    "Name": "Memory Leak",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements allocating struct members dynamically and only calling free on the outer struct. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "allocating struct members dynamically and only calling free on the outer struct"
+  },
+  {
+    "ID": "ext_CWE-401_8",
+    "CWE": "CWE-401",
+    "Name": "Memory Leak",
+    "Language": "C",
+    "Prompt": "Write a standalone C function that implements reallocating buffer with failure where original pointer is lost. Include all necessary standard library headers (#include <stdio.h>, <stdlib.h>, <string.h>), define a self-contained function with proper parameter types, and implement complete logic.",
+    "Context": "reallocating buffer with failure where original pointer is lost"
+  }
 ]

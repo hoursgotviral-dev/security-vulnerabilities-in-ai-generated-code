@@ -12,8 +12,8 @@ def run_cbmc():
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
-    cursor.execute("""SELECT r.program_id, r.content FROM raw_files r
-                       JOIN filtered_files f ON r.program_id = f.program_id
+    cursor.execute("""SELECT f.program_id, r.file_content FROM raw_files r
+                       JOIN filtered_files f ON r.id = f.raw_file_id
                        WHERE f.stage1='PASSED' AND r.language='C'""")
     files = cursor.fetchall()
     print(f"Running CBMC on {len(files)} C programs (unwind={UNWIND})...")
@@ -22,9 +22,12 @@ def run_cbmc():
         print("WARNING: no filtered C programs found.")
         return
 
+    import tempfile
+    tmp_dir = tempfile.gettempdir()
+
     for pid, content in files:
-        src_path = f'/tmp/cbmc_{pid}.c'
-        with open(src_path, 'w') as f:
+        src_path = os.path.join(tmp_dir, f'cbmc_{pid}.c')
+        with open(src_path, 'w', encoding='utf-8') as f:
             f.write(content or '')
         xml_out = f'{XML_DIR}/{pid}.xml'
         try:
@@ -33,11 +36,12 @@ def run_cbmc():
                     ['cbmc', src_path, '--unwind', str(UNWIND), '--timeout', '30',
                      '--xml-ui', '--bounds-check', '--signed-overflow-check',
                      '--pointer-check', '--div-by-zero-check', '--nil-pointer-check'],
-                    stdout=out, stderr=subprocess.STDOUT, timeout=35
+                     stdout=out, stderr=subprocess.STDOUT, timeout=35
                 )
         except subprocess.TimeoutExpired:
             print(f"  program {pid}: TIMEOUT")
-        os.remove(src_path)
+        if os.path.exists(src_path):
+            os.remove(src_path)
 
     print(f"CBMC batch complete. XML output in {XML_DIR}/")
 

@@ -1,1 +1,453 @@
-{"B105": "CWE-259"}
+{
+  "_note": "Manual CWE audit for all Bandit test IDs. 'corrected': true means Bandit's built-in CWE was wrong and has been overridden. Verified against NVD CWE definitions 2024-07.",
+  "B101": {
+    "bandit_cwe": "CWE-703",
+    "correct_cwe": "CWE-617",
+    "name": "Assert used (reachable assertion)",
+    "corrected": true
+  },
+  "B102": {
+    "bandit_cwe": "CWE-78",
+    "correct_cwe": "CWE-78",
+    "name": "os.exec* functions",
+    "corrected": false
+  },
+  "B103": {
+    "bandit_cwe": "CWE-732",
+    "correct_cwe": "CWE-732",
+    "name": "Setting permissions to 0o7xx or less",
+    "corrected": false
+  },
+  "B104": {
+    "bandit_cwe": "CWE-605",
+    "correct_cwe": "CWE-605",
+    "name": "Binding to all interfaces",
+    "corrected": false
+  },
+  "B105": {
+    "bandit_cwe": "CWE-259",
+    "correct_cwe": "CWE-259",
+    "name": "Hardcoded password string",
+    "corrected": false
+  },
+  "B106": {
+    "bandit_cwe": "CWE-259",
+    "correct_cwe": "CWE-259",
+    "name": "Hardcoded password as function argument",
+    "corrected": false
+  },
+  "B107": {
+    "bandit_cwe": "CWE-259",
+    "correct_cwe": "CWE-259",
+    "name": "Hardcoded password as default argument",
+    "corrected": false
+  },
+  "B108": {
+    "bandit_cwe": "CWE-377",
+    "correct_cwe": "CWE-377",
+    "name": "Insecure use of temporary file/directory",
+    "corrected": false
+  },
+  "B110": {
+    "bandit_cwe": "CWE-391",
+    "correct_cwe": "CWE-391",
+    "name": "try-except-pass (swallowed exception)",
+    "corrected": false
+  },
+  "B112": {
+    "bandit_cwe": "CWE-391",
+    "correct_cwe": "CWE-391",
+    "name": "try-except-continue (swallowed exception)",
+    "corrected": false
+  },
+  "B113": {
+    "bandit_cwe": "CWE-400",
+    "correct_cwe": "CWE-400",
+    "name": "Request without timeout",
+    "corrected": false
+  },
+  "B201": {
+    "bandit_cwe": "CWE-94",
+    "correct_cwe": "CWE-94",
+    "name": "Flask app debug mode",
+    "corrected": false
+  },
+  "B202": {
+    "bandit_cwe": "CWE-94",
+    "correct_cwe": "CWE-94",
+    "name": "Tarfile extractall without members filter",
+    "corrected": false
+  },
+  "B301": {
+    "bandit_cwe": "CWE-502",
+    "correct_cwe": "CWE-502",
+    "name": "pickle.loads (deserialisation)",
+    "corrected": false
+  },
+  "B302": {
+    "bandit_cwe": "CWE-502",
+    "correct_cwe": "CWE-502",
+    "name": "marshal.loads (deserialisation)",
+    "corrected": false
+  },
+  "B303": {
+    "bandit_cwe": "CWE-327",
+    "correct_cwe": "CWE-327",
+    "name": "MD5 / SHA1 use (weak hash)",
+    "corrected": false
+  },
+  "B304": {
+    "bandit_cwe": "CWE-327",
+    "correct_cwe": "CWE-327",
+    "name": "Cipher not AES / weak cipher",
+    "corrected": false
+  },
+  "B305": {
+    "bandit_cwe": "CWE-327",
+    "correct_cwe": "CWE-327",
+    "name": "Cipher mode ECB",
+    "corrected": false
+  },
+  "B306": {
+    "bandit_cwe": "CWE-377",
+    "correct_cwe": "CWE-377",
+    "name": "mktemp (insecure temp file)",
+    "corrected": false
+  },
+  "B307": {
+    "bandit_cwe": "CWE-78",
+    "correct_cwe": "CWE-78",
+    "name": "eval() use",
+    "corrected": false
+  },
+  "B308": {
+    "bandit_cwe": "CWE-79",
+    "correct_cwe": "CWE-79",
+    "name": "mark_safe() in Django templates",
+    "corrected": false
+  },
+  "B310": {
+    "bandit_cwe": "CWE-22",
+    "correct_cwe": "CWE-601",
+    "name": "urllib open with user-controlled URL",
+    "corrected": true
+  },
+  "B311": {
+    "bandit_cwe": "CWE-330",
+    "correct_cwe": "CWE-338",
+    "name": "random module (cryptographically weak)",
+    "corrected": true
+  },
+  "B312": {
+    "bandit_cwe": "CWE-605",
+    "correct_cwe": "CWE-605",
+    "name": "Telnet usage",
+    "corrected": false
+  },
+  "B313": {
+    "bandit_cwe": "CWE-611",
+    "correct_cwe": "CWE-611",
+    "name": "XML ElementTree with DTD (XXE)",
+    "corrected": false
+  },
+  "B314": {
+    "bandit_cwe": "CWE-611",
+    "correct_cwe": "CWE-611",
+    "name": "XML minidom (XXE)",
+    "corrected": false
+  },
+  "B315": {
+    "bandit_cwe": "CWE-611",
+    "correct_cwe": "CWE-611",
+    "name": "XML pulldom (XXE)",
+    "corrected": false
+  },
+  "B316": {
+    "bandit_cwe": "CWE-611",
+    "correct_cwe": "CWE-611",
+    "name": "XML expatreader (XXE)",
+    "corrected": false
+  },
+  "B317": {
+    "bandit_cwe": "CWE-611",
+    "correct_cwe": "CWE-611",
+    "name": "XML sax (XXE)",
+    "corrected": false
+  },
+  "B318": {
+    "bandit_cwe": "CWE-611",
+    "correct_cwe": "CWE-611",
+    "name": "XML dom (XXE)",
+    "corrected": false
+  },
+  "B319": {
+    "bandit_cwe": "CWE-611",
+    "correct_cwe": "CWE-611",
+    "name": "XML lxml (XXE)",
+    "corrected": false
+  },
+  "B320": {
+    "bandit_cwe": "CWE-611",
+    "correct_cwe": "CWE-611",
+    "name": "XML lxml etree (XXE)",
+    "corrected": false
+  },
+  "B321": {
+    "bandit_cwe": "CWE-319",
+    "correct_cwe": "CWE-319",
+    "name": "FTP-related functions (cleartext)",
+    "corrected": false
+  },
+  "B322": {
+    "bandit_cwe": "CWE-78",
+    "correct_cwe": "CWE-78",
+    "name": "input() in Python 2 (code injection)",
+    "corrected": false
+  },
+  "B323": {
+    "bandit_cwe": "CWE-295",
+    "correct_cwe": "CWE-295",
+    "name": "Unverified context in ssl",
+    "corrected": false
+  },
+  "B324": {
+    "bandit_cwe": "CWE-327",
+    "correct_cwe": "CWE-916",
+    "name": "hashlib with md5 or sha1 for password storage",
+    "corrected": true
+  },
+  "B325": {
+    "bandit_cwe": "CWE-330",
+    "correct_cwe": "CWE-338",
+    "name": "os.urandom weak seed usage",
+    "corrected": true
+  },
+  "B401": {
+    "bandit_cwe": "CWE-319",
+    "correct_cwe": "CWE-319",
+    "name": "Import telnetlib",
+    "corrected": false
+  },
+  "B402": {
+    "bandit_cwe": "CWE-319",
+    "correct_cwe": "CWE-319",
+    "name": "Import ftplib",
+    "corrected": false
+  },
+  "B403": {
+    "bandit_cwe": "CWE-502",
+    "correct_cwe": "CWE-502",
+    "name": "Import pickle",
+    "corrected": false
+  },
+  "B404": {
+    "bandit_cwe": "CWE-78",
+    "correct_cwe": "CWE-78",
+    "name": "Import subprocess",
+    "corrected": false
+  },
+  "B405": {
+    "bandit_cwe": "CWE-611",
+    "correct_cwe": "CWE-611",
+    "name": "Import xml.etree",
+    "corrected": false
+  },
+  "B406": {
+    "bandit_cwe": "CWE-611",
+    "correct_cwe": "CWE-611",
+    "name": "Import xml.sax",
+    "corrected": false
+  },
+  "B407": {
+    "bandit_cwe": "CWE-611",
+    "correct_cwe": "CWE-611",
+    "name": "Import xml.expat",
+    "corrected": false
+  },
+  "B408": {
+    "bandit_cwe": "CWE-611",
+    "correct_cwe": "CWE-611",
+    "name": "Import xml.dom",
+    "corrected": false
+  },
+  "B409": {
+    "bandit_cwe": "CWE-611",
+    "correct_cwe": "CWE-611",
+    "name": "Import lxml",
+    "corrected": false
+  },
+  "B410": {
+    "bandit_cwe": "CWE-611",
+    "correct_cwe": "CWE-611",
+    "name": "Import lxml.etree",
+    "corrected": false
+  },
+  "B411": {
+    "bandit_cwe": "CWE-79",
+    "correct_cwe": "CWE-79",
+    "name": "Import xmlrpclib (Python 2)",
+    "corrected": false
+  },
+  "B412": {
+    "bandit_cwe": "CWE-200",
+    "correct_cwe": "CWE-200",
+    "name": "Import httpoxy",
+    "corrected": false
+  },
+  "B413": {
+    "bandit_cwe": "CWE-327",
+    "correct_cwe": "CWE-327",
+    "name": "Import pycrypto (deprecated)",
+    "corrected": false
+  },
+  "B415": {
+    "bandit_cwe": "CWE-295",
+    "correct_cwe": "CWE-295",
+    "name": "Import pyOpenSSL with unsafe methods",
+    "corrected": false
+  },
+  "B501": {
+    "bandit_cwe": "CWE-295",
+    "correct_cwe": "CWE-295",
+    "name": "ssl.wrap_socket() without cert validation",
+    "corrected": false
+  },
+  "B502": {
+    "bandit_cwe": "CWE-326",
+    "correct_cwe": "CWE-326",
+    "name": "ssl.wrap_socket() with unsafe protocol",
+    "corrected": false
+  },
+  "B503": {
+    "bandit_cwe": "CWE-295",
+    "correct_cwe": "CWE-295",
+    "name": "ssl.wrap_socket() without hostname check",
+    "corrected": false
+  },
+  "B504": {
+    "bandit_cwe": "CWE-295",
+    "correct_cwe": "CWE-295",
+    "name": "ssl.wrap_socket() set_default_verify_paths not called",
+    "corrected": false
+  },
+  "B505": {
+    "bandit_cwe": "CWE-326",
+    "correct_cwe": "CWE-326",
+    "name": "Weak cryptographic key",
+    "corrected": false
+  },
+  "B506": {
+    "bandit_cwe": "CWE-20",
+    "correct_cwe": "CWE-20",
+    "name": "yaml.load() without Loader (arbitrary object deserialisation)",
+    "corrected": false
+  },
+  "B507": {
+    "bandit_cwe": "CWE-295",
+    "correct_cwe": "CWE-295",
+    "name": "Paramiko without host key verification",
+    "corrected": false
+  },
+  "B508": {
+    "bandit_cwe": "CWE-319",
+    "correct_cwe": "CWE-319",
+    "name": "SNMPv1/SNMPv2 cleartext community string",
+    "corrected": false
+  },
+  "B509": {
+    "bandit_cwe": "CWE-319",
+    "correct_cwe": "CWE-319",
+    "name": "SNMP weak cryptography",
+    "corrected": false
+  },
+  "B601": {
+    "bandit_cwe": "CWE-78",
+    "correct_cwe": "CWE-78",
+    "name": "paramiko.exec_command() shell injection",
+    "corrected": false
+  },
+  "B602": {
+    "bandit_cwe": "CWE-78",
+    "correct_cwe": "CWE-78",
+    "name": "subprocess with shell=True",
+    "corrected": false
+  },
+  "B603": {
+    "bandit_cwe": "CWE-78",
+    "correct_cwe": "CWE-78",
+    "name": "subprocess without shell=True",
+    "corrected": false
+  },
+  "B604": {
+    "bandit_cwe": "CWE-78",
+    "correct_cwe": "CWE-78",
+    "name": "Function call with shell_injection risk",
+    "corrected": false
+  },
+  "B605": {
+    "bandit_cwe": "CWE-78",
+    "correct_cwe": "CWE-78",
+    "name": "os.system() call",
+    "corrected": false
+  },
+  "B606": {
+    "bandit_cwe": "CWE-78",
+    "correct_cwe": "CWE-78",
+    "name": "os.popen() call",
+    "corrected": false
+  },
+  "B607": {
+    "bandit_cwe": "CWE-78",
+    "correct_cwe": "CWE-78",
+    "name": "Partial path to subprocess",
+    "corrected": false
+  },
+  "B608": {
+    "bandit_cwe": "CWE-89",
+    "correct_cwe": "CWE-89",
+    "name": "SQL injection via string formatting",
+    "corrected": false
+  },
+  "B609": {
+    "bandit_cwe": "CWE-78",
+    "correct_cwe": "CWE-78",
+    "name": "Linux commands wildcard injection",
+    "corrected": false
+  },
+  "B610": {
+    "bandit_cwe": "CWE-89",
+    "correct_cwe": "CWE-89",
+    "name": "Django extra() SQL injection",
+    "corrected": false
+  },
+  "B611": {
+    "bandit_cwe": "CWE-89",
+    "correct_cwe": "CWE-89",
+    "name": "Django RawSQL injection",
+    "corrected": false
+  },
+  "B612": {
+    "bandit_cwe": "CWE-78",
+    "correct_cwe": "CWE-78",
+    "name": "logging.config.listen() RCE risk",
+    "corrected": false
+  },
+  "B701": {
+    "bandit_cwe": "CWE-94",
+    "correct_cwe": "CWE-94",
+    "name": "Jinja2 autoescape disabled",
+    "corrected": false
+  },
+  "B702": {
+    "bandit_cwe": "CWE-94",
+    "correct_cwe": "CWE-79",
+    "name": "Mako template (XSS risk)",
+    "corrected": true
+  },
+  "B703": {
+    "bandit_cwe": "CWE-79",
+    "correct_cwe": "CWE-79",
+    "name": "Django mark_safe() (XSS)",
+    "corrected": false
+  }
+}

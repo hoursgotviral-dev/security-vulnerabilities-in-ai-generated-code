@@ -17,9 +17,9 @@ print("Tool availability:", TOOL_AVAILABLE)
 def run_analysis():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
-    cursor.execute("""SELECT r.program_id, r.content, r.language
+    cursor.execute("""SELECT f.program_id, r.file_content, r.language
                        FROM raw_files r
-                       JOIN filtered_files f ON r.program_id = f.program_id
+                       JOIN filtered_files f ON r.id = f.raw_file_id
                        WHERE f.stage1 = 'PASSED'""")
     files = cursor.fetchall()
     print(f"Starting static analysis on {len(files)} filtered files...")
@@ -29,10 +29,13 @@ def run_analysis():
               "Run verify_comment_location.py + filter_stage1.py first.")
         return
 
-    for pid, content, lang in files:
+    import tempfile
+    tmp_dir = tempfile.gettempdir()
+
+    for idx, (pid, content, lang) in enumerate(files, start=1):
         ext = '.py' if lang.lower() == 'python' else '.c'
-        tmp_path = f'/tmp/static_scan_{pid}{ext}'
-        with open(tmp_path, 'w') as f:
+        tmp_path = os.path.join(tmp_dir, f'static_scan_{pid}{ext}')
+        with open(tmp_path, 'w', encoding='utf-8') as f:
             f.write(content or '')
 
         if lang.lower() == 'python' and TOOL_AVAILABLE['bandit']:
@@ -52,9 +55,10 @@ def run_analysis():
             with open(f'{OUT_DIR}/flawfinder_{pid}.csv', 'w') as f:
                 f.write(result.stdout)
 
-        os.remove(tmp_path)
-        if pid % 20 == 0:
-            print(f"  ...scanned program_id {pid}")
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
+        if idx % 100 == 0:
+            print(f"  ...scanned {idx}/{len(files)} files")
 
     print("Static analysis complete. Raw output in results/static_raw/")
 

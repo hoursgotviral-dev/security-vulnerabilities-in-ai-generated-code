@@ -1,6 +1,8 @@
+import os
 import sqlite3
 
-DB_PATH = '../corpus.db'
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+DB_PATH  = os.path.join(BASE_DIR, 'corpus.db')
 
 def build_matrix():
     conn = sqlite3.connect(DB_PATH)
@@ -9,17 +11,17 @@ def build_matrix():
     # Day 16: Three-way LEFT JOIN
     query = """
     SELECT 
-        r.program_id, r.model, r.language,
+        f.program_id, f.model, f.language,
         CASE WHEN s.static_flagged IS NOT NULL THEN 1 ELSE 0 END as static_flagged,
-        CASE WHEN f.cbmc_result = 'SAT' THEN 1 ELSE 0 END as cbmc_sat,
+        CASE WHEN fr.cbmc_result = 'SAT' THEN 1 ELSE 0 END as cbmc_sat,
         COALESCE(d.afl_crashed, 0) as afl_crashed,
         COALESCE(d.edge_coverage_pct, 0) as edge_coverage_pct
-    FROM raw_files r
+    FROM filtered_files f
     LEFT JOIN (SELECT program_id, 1 as static_flagged FROM static_results GROUP BY program_id) s 
-        ON r.program_id = s.program_id
-    LEFT JOIN formal_results f ON r.program_id = f.program_id
-    LEFT JOIN dynamic_results d ON r.program_id = d.program_id
-    WHERE r.language = 'C'
+        ON f.program_id = s.program_id
+    LEFT JOIN formal_results fr ON f.program_id = fr.program_id
+    LEFT JOIN dynamic_results d ON f.program_id = d.program_id
+    WHERE f.language = 'C' AND f.stage1 = 'PASSED'
     """
     
     cursor.execute(query)
