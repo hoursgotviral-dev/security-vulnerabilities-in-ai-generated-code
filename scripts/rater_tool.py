@@ -3,7 +3,7 @@ import sys
 import os
 from datetime import datetime
 
-RATER_ID = "rater_B"  # Change to rater_A when Student A uses this
+RATER_ID = "rater_B" 
 
 def clear_screen():
     os.system('clear')
@@ -62,7 +62,9 @@ def run_rater(limit=100):
         SELECT r.id, r.repo_name, r.file_path, r.language,
                r.ai_tool, r.search_keyword, r.file_content
         FROM raw_files r
-        WHERE r.id NOT IN (
+        JOIN filtered_files ff ON ff.raw_file_id = r.id
+        WHERE ff.stage1 = 'PASSED'
+          AND r.id NOT IN (
             SELECT file_id FROM rater_decisions
             WHERE rater_id = ?
         )
@@ -136,7 +138,7 @@ def show_progress():
     ).fetchall():
         print(f"  {row[0]:<12} | {row[1]} | {row[2]}")
 
-    total = c.execute('SELECT COUNT(*) FROM raw_files').fetchone()[0]
+    total = c.execute("SELECT COUNT(*) FROM filtered_files WHERE stage1='PASSED'").fetchone()[0]
     rated = c.execute(
         'SELECT COUNT(DISTINCT file_id) FROM rater_decisions WHERE rater_id = ?',
         (RATER_ID,)
