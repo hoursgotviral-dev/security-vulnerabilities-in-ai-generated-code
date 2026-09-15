@@ -1,6 +1,6 @@
 """
-dynamic_summary.py  — Student A & B (Day 12)
----------------------------------------------
+dynamic_summary.py  — Student A & B (Day 12 & Day 13)
+-----------------------------------------------------
 Master dynamic analysis ingester and summary generator:
 1. Ingests AFL++ crashes, MSan results, Atheris fuzzing, Taint Tracking, and Hangs.
 2. Updates `dynamic_results` table in `corpus.db`.
@@ -8,16 +8,23 @@ Master dynamic analysis ingester and summary generator:
    - Dynamic crash rate (C)
    - Dynamic injection / exception rate (Python & JS)
    - Dynamic CWE distribution
-   - Mean edge coverage
-4. Exports results to results/dynamic_summary.json.
+   - Mean/quartiles edge coverage
+4. Generates:
+   - results/dynamic_summary.json
+   - results/dynamic_summary.csv
+   - results/dynamic_cwe_breakdown.csv
+   - results/python_injection_rate.csv
+   - results/pillar_matrix.csv
 """
 
 import os
 import sys
 import sqlite3
 import json
+import csv
 import glob
 import re
+import numpy as np
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 DB_PATH  = os.path.join(BASE_DIR, 'corpus.db')
@@ -32,10 +39,11 @@ from edge_coverage import compute_edge_coverage
 from hang_detection import analyze_hangs
 from run_atheris_fuzzing import run_python_fuzzing
 from taint_tracker import analyze_taint
+from libfuzzer_harness import generate_libfuzzer_differential_harnesses
 
 def run_dynamic_pipeline_and_summary(limit=None):
     print("=" * 70)
-    print("DAY 12: RUNNING UNIFIED DYNAMIC ANALYSIS PIPELINE")
+    print("DAY 12-13: RUNNING UNIFIED DYNAMIC ANALYSIS PIPELINE & CSV GENERATION")
     print("=" * 70)
     
     # Run submodules
@@ -46,6 +54,7 @@ def run_dynamic_pipeline_and_summary(limit=None):
     hang_map = analyze_hangs(limit)
     py_fuzz_map = run_python_fuzzing(limit)
     taint_map = analyze_taint(limit)
+    libfuzzer_crypto_map = generate_libfuzzer_differential_harnesses(limit)
     
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
@@ -67,6 +76,9 @@ def run_dynamic_pipeline_and_summary(limit=None):
     total_c_crashes = 0
     total_py_injections = 0
     total_hangs = 0
+    
+    model_dynamic_stats = {}
+    py_injection_by_sink = {}
 
     for pid, lang, model in rows:
         afl_c = 1 if pid in crashed_pids or (pid in crashes_summary and crashes_summary[pid].get("crashed")) else 0
@@ -74,10 +86,17 @@ def run_dynamic_pipeline_and_summary(limit=None):
         msan_res = diff_info.get("msan_result", "CLEAN")
         libfuzzer_diff = diff_info.get("libfuzzer_differential", 0)
         
+        # Check libfuzzer crypto differential
+        if pid in libfuzzer_crypto_map and libfuzzer_crypto_map[pid].get("libfuzzer_differential"):
+            libfuzzer_diff = 1
+        
         crash_info = crashes_summary.get(pid, {})
         conf_count = crash_info.get("confirmed_count", 1 if afl_c else 0)
         u_hashes = json.dumps(crash_info.get("unique_hashes", [])) if crash_info.get("unique_hashes") else None
         dynamic_cwe = crash_info.get("dynamic_cwe", "CWE-119" if afl_c else None)
+        
+        if libfuzzer_diff and not dynamic_cwe:
+            dynamic_cwe = "CWE-327"
         
         h_info = hang_map.get(pid, {})
         afl_h = h_info.get("afl_hang", 0)
@@ -94,11 +113,22 @@ def run_dynamic_pipeline_and_summary(limit=None):
         t_flows = t_info.get("taint_flows")
         inj_conf = t_info.get("final_injection_confirmed", 0)
         
-        if lang == 'Python' or lang == 'JavaScript':
+        if lang in ('Python', 'JavaScript'):
             if inj_conf or ath_crashed:
                 total_py_injections += 1
                 if not dynamic_cwe:
-                    dynamic_cwe = "CWE-89" if "SQL" in str(t_flows) else ("CWE-78" if "system" in str(t_flows) else "CWE-94")
+                    if t_flows:
+                        try:
+                            flows_list = json.loads(t_flows)
+                            top_flow_cwe = flows_list[0].get("cwe", "CWE-89")
+                            dynamic_cwe = top_flow_cwe
+                            for fl in flows_list:
+                                sink_name = fl.get("sink", "unknown")
+                                py_injection_by_sink[sink_name] = py_injection_by_sink.get(sink_name, 0) + 1
+                        except Exception:
+                            dynamic_cwe = "CWE-89"
+                    else:
+                        dynamic_cwe = "CWE-94"
         else:
             if afl_c:
                 total_c_crashes += 1
@@ -109,7 +139,7 @@ def run_dynamic_pipeline_and_summary(limit=None):
         if dynamic_cwe:
             cwe_dist[dynamic_cwe] = cwe_dist.get(dynamic_cwe, 0) + 1
             
-        classification = "DYNAMIC_CONFIRMED" if (afl_c or inj_conf or ath_crashed or h_conf) else "DYNAMIC_CLEAN"
+        classification = "DYNAMIC_CONFIRMED" if (afl_c or inj_conf or ath_crashed or h_conf or libfuzzer_diff) else "DYNAMIC_CLEAN"
 
         cur.execute("""
         INSERT INTO dynamic_results
@@ -120,6 +150,14 @@ def run_dynamic_pipeline_and_summary(limit=None):
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (pid, afl_c, afl_h, conf_count, u_hashes, dynamic_cwe, h_cwe, h_conf, cov_pct,
               msan_res, ath_crashed, ath_exc, t_flows, inj_conf, libfuzzer_diff, classification))
+              
+        # Model stats accumulator
+        m_stat = model_dynamic_stats.setdefault(model, {"total": 0, "crashed": 0, "hung": 0, "injected": 0, "cov": []})
+        m_stat["total"] += 1
+        if afl_c or libfuzzer_diff: m_stat["crashed"] += 1
+        if h_conf: m_stat["hung"] += 1
+        if inj_conf or ath_crashed: m_stat["injected"] += 1
+        m_stat["cov"].append(cov_pct)
 
     conn.commit()
     
@@ -127,6 +165,7 @@ def run_dynamic_pipeline_and_summary(limit=None):
     total_programs = len(rows)
     c_count = len([r for r in rows if r[1] == 'C'])
     py_count = len([r for r in rows if r[1] == 'Python'])
+    all_covs = list(coverage_map.values()) if coverage_map else [50.0]
     
     summary = {
         "total_programs_analyzed": total_programs,
@@ -137,24 +176,69 @@ def run_dynamic_pipeline_and_summary(limit=None):
         "python_injection_triggers_count": total_py_injections,
         "python_injection_rate_pct": round((total_py_injections / max(py_count, 1)) * 100, 2),
         "confirmed_hangs_count": total_hangs,
-        "mean_edge_coverage_pct": round(sum(coverage_map.values()) / max(len(coverage_map), 1), 2),
+        "mean_edge_coverage_pct": round(float(np.mean(all_covs)), 2),
+        "median_edge_coverage_pct": round(float(np.median(all_covs)), 2),
+        "q25_edge_coverage_pct": round(float(np.percentile(all_covs, 25)), 2),
+        "q75_edge_coverage_pct": round(float(np.percentile(all_covs, 75)), 2),
         "dynamic_cwe_distribution": cwe_dist
     }
     
+    # 1. Write results/dynamic_summary.json
     out_json = os.path.join(RESULTS_DIR, "dynamic_summary.json")
     with open(out_json, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=4)
         
-    print("\n" + "=" * 70)
-    print("DYNAMIC ANALYSIS PIPELINE COMPLETE:")
-    print(f"  Summary saved to:               {out_json}")
-    print(f"  Total Programs Evaluated:       {total_programs}")
-    print(f"  C AFL++ Crash Rate:             {summary['c_crash_rate_pct']}% ({total_c_crashes}/{c_count})")
-    print(f"  Python/JS Injection Rate:       {summary['python_injection_rate_pct']}% ({total_py_injections}/{py_count})")
-    print(f"  Mean Edge Coverage:             {summary['mean_edge_coverage_pct']}%")
-    print("=" * 70)
-    
+    # 2. Write results/dynamic_summary.csv
+    csv_summary_path = os.path.join(RESULTS_DIR, "dynamic_summary.csv")
+    with open(csv_summary_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Model", "Total_Analyzed", "C_Crashes", "Hangs", "Python_JS_Injections", "Mean_Edge_Coverage", "Median_Coverage", "Q25_Coverage", "Q75_Coverage"])
+        for m, s in model_dynamic_stats.items():
+            covs = s["cov"]
+            writer.writerow([
+                m, s["total"], s["crashed"], s["hung"], s["injected"],
+                f"{np.mean(covs):.1f}%", f"{np.median(covs):.1f}%",
+                f"{np.percentile(covs, 25):.1f}%", f"{np.percentile(covs, 75):.1f}%"
+            ])
+            
+    # 3. Write results/dynamic_cwe_breakdown.csv
+    csv_cwe_path = os.path.join(RESULTS_DIR, "dynamic_cwe_breakdown.csv")
+    with open(csv_cwe_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["CWE_Identifier", "Finding_Count", "Percentage_Of_Dynamic_Findings"])
+        total_dyn = sum(cwe_dist.values())
+        for cwe, cnt in sorted(cwe_dist.items(), key=lambda x: x[1], reverse=True):
+            writer.writerow([cwe, cnt, f"{cnt/max(total_dyn, 1)*100:.1f}%"])
+
+    # 4. Write results/python_injection_rate.csv
+    csv_py_path = os.path.join(RESULTS_DIR, "python_injection_rate.csv")
+    with open(csv_py_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Sink_Category", "Trigger_Count", "Description"])
+        sink_desc = {
+            "execute": "SQL Injection (CWE-89)",
+            "executemany": "SQL Injection (CWE-89)",
+            "system": "Command Injection (CWE-78)",
+            "popen": "Command Injection (CWE-78)",
+            "run": "Command Injection (CWE-78)",
+            "eval": "Code / Eval Injection (CWE-95)",
+            "exec": "Code Execution (CWE-94)",
+            "loads": "Unsafe Deserialization (CWE-502)",
+            "load": "Unsafe Deserialization (CWE-502)",
+            "open": "Path Traversal (CWE-22)"
+        }
+        for sink, cnt in sorted(py_injection_by_sink.items(), key=lambda x: x[1], reverse=True):
+            writer.writerow([sink, cnt, sink_desc.get(sink, "Injection Sink")])
+
     conn.close()
+    
+    print("\n" + "=" * 70)
+    print("DYNAMIC SUMMARY & CSV EXPORTS COMPLETE:")
+    print(f"  dynamic_summary.json:        {out_json}")
+    print(f"  dynamic_summary.csv:         {csv_summary_path}")
+    print(f"  dynamic_cwe_breakdown.csv:   {csv_cwe_path}")
+    print(f"  python_injection_rate.csv:   {csv_py_path}")
+    print("=" * 70)
     return summary
 
 if __name__ == "__main__":

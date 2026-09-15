@@ -128,6 +128,26 @@ def build_matrix():
         """, (pid, model, lang, s, f_sat, d, d, dyn_cwe, edge, classification, cell))
         
     conn.commit()
+    
+    # Export pillar_matrix.csv
+    results_dir = os.path.join(BASE_DIR, 'results')
+    os.makedirs(results_dir, exist_ok=True)
+    csv_matrix_path = os.path.join(results_dir, "pillar_matrix.csv")
+    
+    cur.execute("""
+    SELECT program_id, model, language, static_flagged, cbmc_sat, afl_crashed, dynamic_cwe, edge_coverage_pct, classification, cell_label
+    FROM pillar_matrix
+    ORDER BY program_id ASC
+    """)
+    matrix_export_rows = cur.fetchall()
+    
+    import csv
+    with open(csv_matrix_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Program_ID", "Model", "Language", "Static_Flagged", "CBMC_SAT", "Dynamic_Crashed", "Dynamic_CWE", "Edge_Coverage_Pct", "Classification", "Cell_Label"])
+        writer.writerows(matrix_export_rows)
+
+    print(f"Pillar Matrix CSV saved to: {csv_matrix_path}")
     print("\n" + "=" * 70)
     print("PILLAR MATRIX RECONSTRUCTION COMPLETE:")
     print("  8-Cell Matrix Distribution:")
