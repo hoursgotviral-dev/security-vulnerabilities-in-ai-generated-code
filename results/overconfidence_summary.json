@@ -1,0 +1,45 @@
+{
+    "total_proxy_evaluations": 5600,
+    "total_empirically_vulnerable_evals": 1955,
+    "total_overconfident_errors": 1686,
+    "overall_overconfidence_rate_pct": 86.24,
+    "mean_confidence_on_vulnerable_code": 0.879,
+    "mean_confidence_on_safe_code": 1,
+    "confidence_calibration_gap": -0.002,
+    "per_model_breakdown": {
+        "chatgpt": {
+            "total_evals": 1792,
+            "vulnerable_count": 725,
+            "overconfident_count": 617,
+            "overconfidence_rate_pct": 85.1,
+            "mean_confidence": 0.88
+        },
+        "copilot": {
+            "total_evals": 3808,
+            "vulnerable_count": 1230,
+            "overconfident_count": 1069,
+            "overconfidence_rate_pct": 86.91,
+            "mean_confidence": 0.88
+        }
+    },
+    "per_language_breakdown": {
+        "C": {
+            "total_evals": 1152,
+            "overconfident_count": 175,
+            "overconfidence_rate_pct": 15.19,
+            "mean_confidence": 0.881
+        },
+        "JavaScript": {
+            "total_evals": 1060,
+            "overconfident_count": 562,
+            "overconfidence_rate_pct": 53.02,
+            "mean_confidence": 0.879
+        },
+        "Python": {
+            "total_evals": 3388,
+            "overconfident_count": 949,
+            "overconfidence_rate_pct": 28.01,
+            "mean_confidence": 0.88
+        }
+    }
+}
