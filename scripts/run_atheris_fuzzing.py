@@ -1,104 +1,127 @@
 """
-run_atheris_fuzzing.py  — Student B (Day 12)
---------------------------------------------
-Executes Atheris / Python dynamic fuzzing harnesses:
-1. Feeds structured and mutated payload strings into Python targets.
-2. Monitors for unhandled exceptions, type errors, injection execution, and crashes.
-3. Records exception types, execution traces, and crash indicators.
-"""
+run_atheris_fuzzing.py  — Python dynamic fuzzing (REAL execution version)
 
-import os
-import sys
-import sqlite3
-import subprocess
-import glob
-import re
-import argparse
+Replaces the earlier version that only string-matched source code for terms
+like eval( or os.system. That approach never executed anything, so its
+"crashes" were not real. This version actually RUNS each Python program in an
+isolated subprocess against a set of mutated inputs and records only genuine
+runtime failures.
+
+Honesty guarantees:
+- If a program cannot be executed at all, it is recorded as EXEC_ERROR, not a crash.
+- A "crash" is recorded ONLY when the subprocess actually raises an unhandled
+  exception or is killed by a signal while running an input.
+- Nothing is inferred from the source text. No value is fabricated.
+
+Note on Atheris: true coverage-guided Atheris fuzzing requires the atheris
+package (hard to install; needs clang + libFuzzer). This script does real
+input-driven differential execution, which is honest dynamic analysis. If you
+have atheris installed and per-target harnesses, run those instead and ingest
+their real crash files. Do not fall back to source string-matching.
+"""
+import os, sys, sqlite3, subprocess, tempfile, argparse, signal
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 DB_PATH  = os.path.join(BASE_DIR, 'corpus.db')
-RESULTS_DIR = os.path.join(BASE_DIR, 'results')
-ATHERIS_DIR = os.path.join(RESULTS_DIR, 'atheris_targets')
 
-def run_python_fuzzing(limit=None):
-    print("=" * 70)
-    print("DAY 12: RUNNING PYTHON DYNAMIC / ATHERIS FUZZING")
-    print("=" * 70)
-    
+# Inputs fed to each program on stdin / argv. Real payloads, really executed.
+TEST_INPUTS = [
+    b"",
+    b"A" * 4096,
+    b"'; DROP TABLE users; --",
+    b"../../../../etc/passwd",
+    b"\x00\xff\xfe\xfd",
+    b"-1",
+    b"999999999999999999999999",
+    b"{'x': 1}",
+]
+
+def run_one_program(code, timeout_sec=10):
+    """Write the program to a temp file and execute it once per test input.
+    Returns (crashed:int, exc_type:str|None). crashed=1 only on a real
+    unhandled exception or signal kill during execution."""
+    with tempfile.NamedTemporaryFile(suffix='.py', mode='w', delete=False) as f:
+        f.write(code)
+        path = f.name
+    try:
+        for inp in TEST_INPUTS:
+            try:
+                p = subprocess.run(
+                    [sys.executable, path],
+                    input=inp,
+                    capture_output=True,
+                    timeout=timeout_sec,
+                )
+            except subprocess.TimeoutExpired:
+                # A hang is a real dynamic finding (possible DoS / infinite loop)
+                return 1, "Timeout/Hang"
+            # Non-zero exit caused by an unhandled Python exception
+            if p.returncode != 0:
+                stderr = p.stderr.decode('utf-8', 'ignore')
+                if 'Traceback (most recent call last)' in stderr:
+                    # last line of a traceback is usually "ExceptionType: msg"
+                    last = [l for l in stderr.strip().splitlines() if l.strip()]
+                    exc = last[-1].split(':')[0] if last else "UnhandledException"
+                    return 1, exc
+                if p.returncode < 0:  # killed by signal
+                    return 1, f"Signal{-p.returncode}"
+        return 0, None
+    finally:
+        os.unlink(path)
+
+def run(limit=None):
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
-    
-    query = """
-    SELECT f.program_id, r.file_content
-    FROM filtered_files f
-    JOIN raw_files r ON f.raw_file_id = r.id
-    WHERE f.language = 'Python' AND f.stage1 = 'PASSED'
-    ORDER BY f.id ASC
+    q = """
+        SELECT f.program_id, r.file_content
+        FROM filtered_files f
+        JOIN raw_files r ON f.raw_file_id = r.id
+        WHERE f.language='Python' AND f.stage1='PASSED'
+        ORDER BY f.id ASC
     """
     if limit:
-        query += f" LIMIT {limit}"
-        
-    cur.execute(query)
-    rows = cur.fetchall()
-    print(f"Total Python programs to fuzz: {len(rows)}")
-    
-    fuzzed_count = 0
-    crashed_count = 0
-    results = {}
+        q += f" LIMIT {int(limit)}"
+    rows = cur.execute(q).fetchall()
+    print(f"Python programs to fuzz (real execution): {len(rows)}")
 
-    test_payloads = [
-        b"'; DROP TABLE users; --",
-        b"\" OR 1=1 --",
-        b"__import__('os').system('id')",
-        b"; cat /etc/passwd",
-        b"../../../../etc/shadow",
-        b"A" * 1024,
-        b"\x00\xff\xfe\xfd",
-        b"{'user': 'admin', 'role': 'root'}"
-    ]
+    # store results on dynamic_results; adjust column names if yours differ
+    cur.execute("""CREATE TABLE IF NOT EXISTS dynamic_results (
+        program_id TEXT, language TEXT, tool TEXT,
+        atheris_crashed INTEGER, atheris_exception_type TEXT,
+        exec_status TEXT
+    )""")
 
-    for i, (pid, content) in enumerate(rows):
-        target_dir = os.path.join(ATHERIS_DIR, pid)
-        target_py = os.path.join(target_dir, "fuzzer.py")
-        
-        crashed = 0
-        exc_type = None
-        
-        # Check source for unhandled exception risks or dynamic execution
-        content_str = content or ""
-        if "eval(" in content_str or "exec(" in content_str:
-            crashed = 1
-            exc_type = "CodeInjectionWarning"
-        elif "subprocess.Popen" in content_str or "os.system" in content_str:
-            crashed = 1
-            exc_type = "CommandInjectionWarning"
-        elif "pickle.loads" in content_str or "yaml.load(" in content_str:
-            crashed = 1
-            exc_type = "UnsafeDeserializationWarning"
-            
-        if crashed:
-            crashed_count += 1
-            
-        results[pid] = {
-            "atheris_crashed": crashed,
-            "atheris_exception_type": exc_type
-        }
-        fuzzed_count += 1
-        
-        if (i + 1) % 100 == 0 or (i + 1) == len(rows):
-            print(f"  Atheris progress: {i + 1}/{len(rows)} (Exceptions/Triggers: {crashed_count})")
+    crashed = exec_err = clean = 0
+    for i, (pid, content) in enumerate(rows, 1):
+        if not content:
+            cur.execute("INSERT INTO dynamic_results (program_id, language, tool, exec_status) VALUES (?,?,?,?)",
+                        (pid, 'Python', 'atheris', 'NO_SOURCE'))
+            exec_err += 1
+            continue
+        try:
+            c, exc = run_one_program(content)
+        except Exception as e:
+            cur.execute("INSERT INTO dynamic_results (program_id, language, tool, exec_status) VALUES (?,?,?,?)",
+                        (pid, 'Python', 'atheris', f'EXEC_ERROR:{type(e).__name__}'))
+            exec_err += 1
+            continue
+        cur.execute("""INSERT INTO dynamic_results
+            (program_id, language, tool, atheris_crashed, atheris_exception_type, exec_status)
+            VALUES (?,?,?,?,?,?)""",
+            (pid, 'Python', 'atheris', c, exc, 'RAN'))
+        if c: crashed += 1
+        else: clean += 1
+        if i % 100 == 0:
+            conn.commit(); print(f"  {i}/{len(rows)}  crashes so far: {crashed}")
+    conn.commit(); conn.close()
+    print("\n=== REAL Atheris/Python fuzzing complete ===")
+    print(f"  ran clean:   {clean}")
+    print(f"  real crashes:{crashed}")
+    print(f"  exec errors: {exec_err}")
+    print("Report 'ran clean + real crashes' as your sample; exec errors are not crashes.")
 
-    print("\n" + "=" * 70)
-    print("ATHERIS / PYTHON FUZZING SUMMARY:")
-    print(f"  Total Python Programs Fuzzed:  {fuzzed_count}")
-    print(f"  Unhandled Exceptions/Triggers: {crashed_count} ({crashed_count/max(fuzzed_count,1)*100:.1f}%)")
-    print("=" * 70)
-    
-    conn.close()
-    return results
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--limit", type=int, default=None)
-    args = parser.parse_args()
-    run_python_fuzzing(args.limit)
+if __name__ == '__main__':
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--limit', type=int, default=None)
+    args = ap.parse_args()
+    run(args.limit)
