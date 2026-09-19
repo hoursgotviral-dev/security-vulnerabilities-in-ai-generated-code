@@ -1,0 +1,61 @@
+{
+  "raw_total_findings": 30143,
+  "assert_noise_CWE617_excluded": 0,
+  "assert_noise_pct_of_raw": 0.0,
+  "core_findings_excluding_asserts": 30143,
+  "core_findings_MEDIUM_HIGH_only": 29985,
+  "programs_with_a_core_finding": 3168,
+  "core_severity_breakdown": {
+    "HIGH": 99,
+    "LOW": 158,
+    "MEDIUM": 29886
+  },
+  "core_tool_breakdown": {
+    "CodeQL": 28793,
+    "JSSecurityEngine": 656,
+    "Semgrep": 694
+  },
+  "top_10_cwes_excluding_asserts": {
+    "CWE-563": 15420,
+    "CWE-699": 8887,
+    "CWE-117": 636,
+    "CWE-390": 590,
+    "CWE-79": 538,
+    "CWE-209": 498,
+    "CWE-396": 366,
+    "CWE-022": 331,
+    "CWE-561": 300,
+    "CWE-770": 286
+  },
+  "per_model_density_excluding_asserts": [
+    {
+      "model": "copilot",
+      "language": "JavaScript",
+      "programs": 530,
+      "findings": 1987,
+      "findings_per_program": 3.75
+    },
+    {
+      "model": "chatgpt",
+      "language": "Python",
+      "programs": 840,
+      "findings": 1935,
+      "findings_per_program": 2.3
+    },
+    {
+      "model": "copilot",
+      "language": "Python",
+      "programs": 532,
+      "findings": 706,
+      "findings_per_program": 1.33
+    },
+    {
+      "model": "copilot",
+      "language": "C",
+      "programs": 334,
+      "findings": 124,
+      "findings_per_program": 0.37
+    }
+  ],
+  "note": "CWE-617 (assert-used, Bandit B101) separated out as low-value noise. Core = all findings except asserts. Report core numbers as the headline; report asserts separately as a code-quality observation."
+}
