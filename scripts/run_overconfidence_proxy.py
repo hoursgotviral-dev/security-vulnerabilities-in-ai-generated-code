@@ -96,7 +96,7 @@ def run(target_calls):
     rows = cur.execute("""
         SELECT pm.program_id, pm.model, pm.language,
                MAX(CASE WHEN pm.static_flagged=1 OR pm.cbmc_sat=1
-                        OR pm.dynamic_crashed=1 THEN 1 ELSE 0 END) AS emp_vuln,
+                        OR pm.afl_crashed=1 OR pm.asan_confirmed=1 THEN 1 ELSE 0 END) AS emp_vuln,
                ff.raw_file_id
         FROM pillar_matrix pm
         JOIN filtered_files ff ON ff.program_id = pm.program_id

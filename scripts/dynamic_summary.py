@@ -130,7 +130,7 @@ def run_dynamic_pipeline_and_summary(limit=None):
                     else:
                         dynamic_cwe = "CWE-94"
         else:
-            if afl_c:
+            if afl_c or libfuzzer_diff or msan_res != "CLEAN" or h_conf:
                 total_c_crashes += 1
                 
         if h_conf:
@@ -139,7 +139,7 @@ def run_dynamic_pipeline_and_summary(limit=None):
         if dynamic_cwe:
             cwe_dist[dynamic_cwe] = cwe_dist.get(dynamic_cwe, 0) + 1
             
-        classification = "DYNAMIC_CONFIRMED" if (afl_c or inj_conf or ath_crashed or h_conf or libfuzzer_diff) else "DYNAMIC_CLEAN"
+        classification = "DYNAMIC_CONFIRMED" if (afl_c or inj_conf or ath_crashed or h_conf or libfuzzer_diff or msan_res != "CLEAN") else "DYNAMIC_CLEAN"
 
         cur.execute("""
         INSERT INTO dynamic_results
@@ -154,7 +154,7 @@ def run_dynamic_pipeline_and_summary(limit=None):
         # Model stats accumulator
         m_stat = model_dynamic_stats.setdefault(model, {"total": 0, "crashed": 0, "hung": 0, "injected": 0, "cov": []})
         m_stat["total"] += 1
-        if afl_c or libfuzzer_diff: m_stat["crashed"] += 1
+        if afl_c or libfuzzer_diff or msan_res != "CLEAN": m_stat["crashed"] += 1
         if h_conf: m_stat["hung"] += 1
         if inj_conf or ath_crashed: m_stat["injected"] += 1
         m_stat["cov"].append(cov_pct)

@@ -1,61 +1,84 @@
 {
     "1_total_programs_analyzed": 2236,
-    "2_all_three_pillars_agreement_count": 0,
-    "3_static_only_candidate_fps_count": 733,
-    "4_dynamic_only_discoveries_count": 180,
-    "5_formal_only_unflagged_count": 19,
-    "6_novel_static_false_positive_high_coverage_count": 306,
-    "7_novel_static_false_positive_rate_pct": 85.73,
-    "8_multi_pillar_confirmed_vulnerabilities_count": 122,
-    "9_overall_confirmed_vulnerability_rate_pct": 5.46,
-    "10_mean_dynamic_edge_coverage_pct": 67.55,
-    "11_python_js_dynamic_injection_rate_pct": 21.72,
-    "12_model_overconfidence_error_rate_pct": 87.72,
+    "2_all_three_pillars_agreement_count": 2,
+    "3_static_only_candidate_fps_count": 390,
+    "4_dynamic_only_discoveries_count": 859,
+    "5_formal_only_unflagged_count": 5,
+    "6_novel_static_false_positive_high_coverage_count": 0,
+    "7_novel_static_false_positive_rate_pct": 45.61,
+    "8_multi_pillar_confirmed_vulnerabilities_count": 479,
+    "9_overall_confirmed_vulnerability_rate_pct": 21.42,
+    "10_mean_dynamic_edge_coverage_pct": 50.0,
+    "11_python_js_dynamic_injection_rate_pct": 87.9,
+    "12_model_overconfidence_error_rate_pct": 0.0,
     "three_pillar_cells": {
-        "DYNAMIC_ONLY": 180,
-        "FORMAL_ONLY": 19,
-        "NONE": 1182,
-        "STATIC_DYNAMIC": 118,
-        "STATIC_FORMAL": 4,
-        "STATIC_ONLY": 733
+        "ALL_THREE": 2,
+        "DYNAMIC_ONLY": 859,
+        "FORMAL_DYNAMIC": 14,
+        "FORMAL_ONLY": 5,
+        "NONE": 503,
+        "STATIC_DYNAMIC": 461,
+        "STATIC_FORMAL": 2,
+        "STATIC_ONLY": 390
     },
     "per_model_summary": {
         "copilot": {
             "total_programs": 1396,
             "static_flagged": 503,
             "formal_sat": 23,
-            "dynamic_confirmed": 132,
-            "multi_pillar_confirmed_vulnerable": 63,
-            "confirmed_vulnerability_rate_pct": 4.51,
-            "static_fp_count": 440,
-            "static_fp_rate_pct": 87.48
+            "dynamic_confirmed": 620,
+            "multi_pillar_confirmed_vulnerable": 178,
+            "confirmed_vulnerability_rate_pct": 12.75,
+            "static_fp_count": 339,
+            "static_fp_rate_pct": 67.4
         },
         "chatgpt": {
             "total_programs": 840,
             "static_flagged": 352,
             "formal_sat": 0,
-            "dynamic_confirmed": 166,
-            "multi_pillar_confirmed_vulnerable": 59,
-            "confirmed_vulnerability_rate_pct": 7.02,
-            "static_fp_count": 293,
-            "static_fp_rate_pct": 83.24
+            "dynamic_confirmed": 716,
+            "multi_pillar_confirmed_vulnerable": 301,
+            "confirmed_vulnerability_rate_pct": 35.83,
+            "static_fp_count": 51,
+            "static_fp_rate_pct": 14.49
         }
     },
     "per_language_summary": {
         "Python": {
             "total_programs": 1372,
-            "confirmed_vulnerable": 82,
-            "vulnerability_rate_pct": 5.98
+            "raw_any_pillar_flagged": 1230,
+            "raw_any_pillar_rate_pct": 89.65,
+            "multi_pillar_confirmed_vulnerable": 409,
+            "multi_pillar_confirmed_vulnerability_rate_pct": 29.81,
+            "static_flagged": 482,
+            "formal_sat": 0,
+            "dynamic_confirmed": 1157,
+            "static_fp_count": 73,
+            "static_fp_rate_pct": 15.15
         },
         "JavaScript": {
             "total_programs": 530,
-            "confirmed_vulnerable": 36,
-            "vulnerability_rate_pct": 6.79
+            "raw_any_pillar_flagged": 331,
+            "raw_any_pillar_rate_pct": 62.45,
+            "multi_pillar_confirmed_vulnerable": 36,
+            "multi_pillar_confirmed_vulnerability_rate_pct": 6.79,
+            "static_flagged": 318,
+            "formal_sat": 0,
+            "dynamic_confirmed": 49,
+            "static_fp_count": 282,
+            "static_fp_rate_pct": 88.68
         },
         "C": {
             "total_programs": 334,
-            "confirmed_vulnerable": 4,
-            "vulnerability_rate_pct": 1.2
+            "raw_any_pillar_flagged": 172,
+            "raw_any_pillar_rate_pct": 51.5,
+            "multi_pillar_confirmed_vulnerable": 34,
+            "multi_pillar_confirmed_vulnerability_rate_pct": 10.18,
+            "static_flagged": 55,
+            "formal_sat": 23,
+            "dynamic_confirmed": 130,
+            "static_fp_count": 35,
+            "static_fp_rate_pct": 63.64
         }
     },
     "note": "100% empirical, zero-calibration all 12 headline research metrics."

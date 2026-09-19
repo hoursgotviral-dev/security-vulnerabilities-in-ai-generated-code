@@ -142,6 +142,22 @@ def run(limit=None):
     print(f"  skipped (NULL, tool/binary missing): {skipped}")
     print("Only 'measured' rows have real coverage. Skipped rows are NULL, never a formula.")
 
+def compute_edge_coverage(limit=None):
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='dynamic_coverage'")
+    if not cur.fetchone():
+        if COVERAGE_AVAILABLE or SHOWMAP:
+            run(limit)
+        else:
+            return {}
+    q = "SELECT program_id, edge_coverage_pct FROM dynamic_coverage WHERE edge_coverage_pct IS NOT NULL"
+    if limit:
+        q += f" LIMIT {int(limit)}"
+    res = dict(cur.execute(q).fetchall())
+    conn.close()
+    return res
+
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--limit', type=int, default=None)

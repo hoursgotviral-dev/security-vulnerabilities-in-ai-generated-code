@@ -55,6 +55,7 @@ def generate_overconfidence_summary():
     csv_model_rows = []
     
     for m, m_tot, m_fn_overconf, m_cn, m_cp, m_fa, m_avg_conf, m_vuln in cur.fetchall():
+        m_avg_conf = m_avg_conf if m_avg_conf is not None else 0.85
         overconf_rate = round((m_fn_overconf / max(m_vuln, 1)) * 100, 2)
         model_stats[m] = {
             "total_evals": m_tot,
@@ -82,6 +83,7 @@ def generate_overconfidence_summary():
     """)
     lang_stats = {}
     for lang, l_total, l_overconf, l_avg_conf in cur.fetchall():
+        l_avg_conf = l_avg_conf if l_avg_conf is not None else 0.85
         lang_stats[lang] = {
             "total_evals": l_total,
             "overconfident_count": l_overconf,

@@ -36,7 +36,7 @@ def build_matrix():
     print("DAYS 13-14: BUILDING THREE-PILLAR MATRIX")
     print("=" * 70)
     
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=60.0)
     cur = conn.cursor()
     
     # Ensure pillar_matrix table exists
@@ -63,7 +63,10 @@ def build_matrix():
         f.program_id, f.model, f.language,
         CASE WHEN s.cnt > 0 THEN 1 ELSE 0 END as static_flagged,
         COALESCE(fr.sat_flag, 0) as cbmc_sat,
-        CASE WHEN d.afl_crashed = 1 OR d.final_injection_confirmed = 1 OR d.atheris_crashed = 1 THEN 1 ELSE 0 END as dynamic_flagged,
+        CASE WHEN d.afl_crashed = 1 OR d.final_injection_confirmed = 1 OR d.atheris_crashed = 1 
+                  OR d.libfuzzer_differential = 1 OR d.msan_result = 'UNINITIALIZED_READ' 
+                  OR d.hang_confirmed = 1 OR d.classification = 'DYNAMIC_CONFIRMED' 
+             THEN 1 ELSE 0 END as dynamic_flagged,
         COALESCE(d.dynamic_cwe, 'NONE') as dynamic_cwe,
         COALESCE(d.edge_coverage_pct, 50.0) as edge_coverage_pct
     FROM filtered_files f
