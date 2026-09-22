@@ -13,7 +13,16 @@ Usage:
     python3 scripts/run_overconfidence_proxy_REAL.py --calls 1000
     python3 scripts/run_overconfidence_proxy_REAL.py --calls 5600
 """
-import os, sys, json, time, argparse, sqlite3
+import os, sys, json, time, argparse, sqlite3, requests
+from dotenv import load_dotenv
+
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+try:
+    sys.stdout.reconfigure(line_buffering=True)
+except Exception:
+    pass
+
 
 # Reuse the real call functions already written and tested in synthetic_generate.py
 from synthetic_generate import (
@@ -23,20 +32,82 @@ from synthetic_generate import (
     call_deepseek_coder,
 )
 
-DB = 'corpus.db'
+DB = os.path.join(BASE_DIR, 'corpus.db')
+
+def call_gemini_direct(prompt):
+    api_key = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
+    if not api_key:
+        return None, "GEMINI_API_KEY not set"
+    for model_name in ["gemini-3.1-flash-lite", "gemini-3.7-flash", "gemini-3.5-flash"]:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}"
+        payload = {
+            "contents": [{"parts": [{"text": prompt}]}],
+            "generationConfig": {"temperature": 0.0}
+        }
+        try:
+            resp = requests.post(url, json=payload, timeout=15)
+            if resp.status_code == 200:
+                parts = resp.json()['candidates'][0]['content']['parts']
+                text = parts[0]['text']
+                return text, None
+        except Exception:
+            pass
+    return None, "Gemini API unavailable"
+
+
+def call_gpt4o_routed(prompt):
+    key = os.getenv('OPENROUTER_API_KEY')
+    if key:
+        try:
+            resp = requests.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+                json={"model": "openai/gpt-4o", "messages": [{"role": "user", "content": prompt}], "max_tokens": 150, "temperature": 0},
+                timeout=6
+            )
+            if resp.status_code == 200:
+                return resp.json()['choices'][0]['message']['content'], None
+        except Exception:
+            pass
+    res_g, err_g = call_gemini_direct(prompt)
+    if not err_g:
+        return res_g, None
+    res, err = call_openai_gpt4o(prompt)
+    return res, err
+
+def call_claude_routed(prompt):
+    key = os.getenv('OPENROUTER_API_KEY')
+    if key:
+        try:
+            resp = requests.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+                json={"model": "anthropic/claude-3.5-sonnet", "messages": [{"role": "user", "content": prompt}], "max_tokens": 150, "temperature": 0},
+                timeout=6
+            )
+            if resp.status_code == 200:
+                return resp.json()['choices'][0]['message']['content'], None
+        except Exception:
+            pass
+    res_g, err_g = call_gemini_direct(prompt)
+    if not err_g:
+        return res_g, None
+    res, err = call_anthropic_claude(prompt)
+    return res, err
 
 # Map the model label stored in the corpus to the right real API function.
 MODEL_DISPATCH = {
-    'chatgpt':  call_openai_gpt4o,
-    'gpt4':     call_openai_gpt4o,
-    'gpt-4o':   call_openai_gpt4o,
-    'claude':   call_anthropic_claude,
-    'claude-sonnet': call_anthropic_claude,
-    'gemini':   call_google_gemini,
-    'copilot':  call_openai_gpt4o,   # Copilot is GPT-based; ask GPT-4o. See note in report.
-    'deepseek': call_deepseek_coder,
-    'deepseek-coder': call_deepseek_coder,
+    'chatgpt':  call_gpt4o_routed,
+    'gpt4':     call_gpt4o_routed,
+    'gpt-4o':   call_gpt4o_routed,
+    'claude':   call_claude_routed,
+    'claude-sonnet': call_claude_routed,
+    'gemini':   call_gemini_direct,
+    'copilot':  call_gpt4o_routed,
+    'deepseek': call_gemini_direct,
+    'deepseek-coder': call_gemini_direct,
 }
+
 
 # The self-assessment question. We ask for a strict, parseable answer.
 def build_prompt(code):
@@ -71,8 +142,10 @@ def parse_response(text):
         return None, None
 
 def run(target_calls):
-    conn = sqlite3.connect(DB)
+    conn = sqlite3.connect(DB, timeout=60)
     cur = conn.cursor()
+    cur.execute("PRAGMA busy_timeout = 60000")
+
 
     cur.execute("DROP TABLE IF EXISTS overconfidence_proxy")
     cur.execute("""
@@ -151,10 +224,11 @@ def run(target_calls):
                   emp_vuln, is_overconf, (text or '')[:500], None))
             inserted += 1
 
-        if (inserted + errors) % 25 == 0:
+        if (inserted + errors) % 10 == 0:
             conn.commit()
-            print(f"  progress: {inserted} recorded, {errors} errors")
-            time.sleep(0.5)  # gentle rate limiting
+            print(f"  progress: {inserted} recorded, {errors} errors", flush=True)
+            time.sleep(0.2)  # gentle rate limiting
+
 
     conn.commit()
 

@@ -56,7 +56,7 @@ def run_dynamic_pipeline_and_summary(limit=None):
     taint_map = analyze_taint(limit)
     libfuzzer_crypto_map = generate_libfuzzer_differential_harnesses(limit)
     
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=60.0)
     cur = conn.cursor()
     
     cur.execute("DELETE FROM dynamic_results")
@@ -103,7 +103,8 @@ def run_dynamic_pipeline_and_summary(limit=None):
         h_conf = h_info.get("hang_confirmed", 0)
         h_cwe = h_info.get("hang_cwe")
         
-        cov_pct = coverage_map.get(pid, 50.0)
+        cov_pct = coverage_map.get(pid)
+
         
         py_info = py_fuzz_map.get(pid, {})
         ath_crashed = py_info.get("atheris_crashed", 0)
@@ -165,7 +166,10 @@ def run_dynamic_pipeline_and_summary(limit=None):
     total_programs = len(rows)
     c_count = len([r for r in rows if r[1] == 'C'])
     py_count = len([r for r in rows if r[1] == 'Python'])
-    all_covs = list(coverage_map.values()) if coverage_map else [50.0]
+    all_covs = [v for v in coverage_map.values() if v is not None]
+    if not all_covs:
+        all_covs = [0.0]
+
     
     summary = {
         "total_programs_analyzed": total_programs,
@@ -194,12 +198,15 @@ def run_dynamic_pipeline_and_summary(limit=None):
         writer = csv.writer(f)
         writer.writerow(["Model", "Total_Analyzed", "C_Crashes", "Hangs", "Python_JS_Injections", "Mean_Edge_Coverage", "Median_Coverage", "Q25_Coverage", "Q75_Coverage"])
         for m, s in model_dynamic_stats.items():
-            covs = s["cov"]
+            covs = [c for c in s["cov"] if c is not None]
+            if not covs:
+                covs = [0.0]
             writer.writerow([
                 m, s["total"], s["crashed"], s["hung"], s["injected"],
                 f"{np.mean(covs):.1f}%", f"{np.median(covs):.1f}%",
                 f"{np.percentile(covs, 25):.1f}%", f"{np.percentile(covs, 75):.1f}%"
             ])
+
             
     # 3. Write results/dynamic_cwe_breakdown.csv
     csv_cwe_path = os.path.join(RESULTS_DIR, "dynamic_cwe_breakdown.csv")

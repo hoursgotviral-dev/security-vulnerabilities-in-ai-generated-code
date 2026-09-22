@@ -2,21 +2,21 @@
     "copilot": {
         "total_programs": 1396,
         "static_flagged": 503,
-        "formal_sat": 23,
-        "dynamic_confirmed": 620,
-        "multi_pillar_confirmed_vulnerable": 178,
-        "confirmed_vulnerability_rate_pct": 12.75,
-        "static_fp_count": 339,
-        "static_fp_rate_pct": 67.4
+        "formal_sat": 31,
+        "dynamic_confirmed": 262,
+        "multi_pillar_confirmed_vulnerable": 98,
+        "confirmed_vulnerability_rate_pct": 7.02,
+        "static_fp_count": 424,
+        "static_fp_rate_pct": 84.29
     },
     "chatgpt": {
         "total_programs": 840,
         "static_flagged": 352,
         "formal_sat": 0,
-        "dynamic_confirmed": 716,
-        "multi_pillar_confirmed_vulnerable": 301,
-        "confirmed_vulnerability_rate_pct": 35.83,
-        "static_fp_count": 51,
-        "static_fp_rate_pct": 14.49
+        "dynamic_confirmed": 166,
+        "multi_pillar_confirmed_vulnerable": 59,
+        "confirmed_vulnerability_rate_pct": 7.02,
+        "static_fp_count": 293,
+        "static_fp_rate_pct": 83.24
     }
 }

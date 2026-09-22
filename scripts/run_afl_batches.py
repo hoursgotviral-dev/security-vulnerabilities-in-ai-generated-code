@@ -24,7 +24,7 @@ RESULTS_DIR = os.path.join(BASE_DIR, 'results')
 AFL_TARGETS_DIR = os.path.join(RESULTS_DIR, 'afl_targets')
 AFL_IN_DIR = os.path.join(RESULTS_DIR, 'afl_in')
 
-def compile_and_fuzz_target(pid, target_dir, seed_dir, batch_num=1, timeout_sec=60):
+def compile_and_fuzz_target(pid, target_dir, seed_dir, batch_num=1, timeout_sec=3):
     src_c = os.path.join(target_dir, f"{pid}.c")
     bin_path = os.path.join(target_dir, f"{pid}_asan")
     crashes_dir = os.path.join(target_dir, "crashes")
@@ -98,6 +98,7 @@ def compile_and_fuzz_target(pid, target_dir, seed_dir, batch_num=1, timeout_sec=
             with open(hang_file, "w", encoding="utf-8") as hf:
                 hf.write(f"HANG: execution exceeded {timeout_sec}s")
             crash_logs.append(hang_file)
+            break
         except Exception:
             pass
 
