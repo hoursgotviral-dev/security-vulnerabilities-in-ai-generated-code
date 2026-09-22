@@ -41,8 +41,8 @@ def create_pr():
     # Fetch latest upstream
     run_git(['fetch', 'upstream', 'main'])
 
-    # Switch to clean branch based on upstream/main
-    run_git(['checkout', '-B', BRANCH_NAME, 'upstream/main'])
+    # Switch to feature branch based on current main
+    run_git(['checkout', '-B', BRANCH_NAME, 'main'])
 
     # Stage all updated scripts, results, and assets
     run_git(['add', '.gitignore'])
@@ -60,7 +60,7 @@ def create_pr():
 
     # Check git status
     status = run_git(['status', '--porcelain'])
-    print(f"Staged changes ready to commit.")
+    print(f"Staged status:\n{status.stdout.strip()}")
 
     commit_msg = """feat: Complete Days 11-14 Dynamic Analysis, Overconfidence Proxy & Three-Pillar Matrix Integration
 
@@ -70,7 +70,8 @@ def create_pr():
 - Reconstructed 3-Pillar Matrix (Static, Formal, Dynamic) across 2,236 programs: 157 confirmed vulnerable (7.02%), 83.86% static FP rate, 273 dynamic-only discoveries.
 - Generated publication figures: Coverage violin plot, Pillar overlap distribution (Fig 1), and CWE frequency heatmap (Fig 2)."""
 
-    run_git(['commit', '-m', commit_msg])
+    if status.stdout.strip():
+        run_git(['commit', '-m', commit_msg])
 
     # Configure authenticated push URL
     auth_origin = f"https://x-access-token:{TOKEN}@github.com/{ORIGIN_REPO}.git"
