@@ -120,6 +120,13 @@ def run(limit=None):
 def run_python_fuzzing(limit=None):
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
+    # Check if real execution results already exist in dynamic_results
+    cur.execute("SELECT program_id, atheris_crashed, atheris_exception_type FROM dynamic_results WHERE atheris_crashed IS NOT NULL")
+    existing = cur.fetchall()
+    if existing:
+        conn.close()
+        return {r[0]: {"atheris_crashed": r[1], "atheris_exception_type": r[2]} for r in existing}
+
     q = """
         SELECT f.program_id, r.file_content
         FROM filtered_files f

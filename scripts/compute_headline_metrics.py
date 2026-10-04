@@ -84,11 +84,11 @@ def compute_headline_metrics():
     mean_cov = round(cur.fetchone()[0] or 67.55, 2)
     
     py_total = cur.execute("SELECT COUNT(*) FROM filtered_files WHERE language = 'Python' AND stage1 = 'PASSED'").fetchone()[0]
-    py_inj = cur.execute("SELECT COUNT(*) FROM dynamic_results WHERE final_injection_confirmed = 1 OR atheris_crashed = 1").fetchone()[0]
+    py_inj = cur.execute("SELECT COUNT(DISTINCT program_id) FROM dynamic_results WHERE final_injection_confirmed = 1 OR atheris_crashed = 1").fetchone()[0]
     py_inj_rate = round((py_inj / max(py_total, 1)) * 100, 2)
     
-    # Overconfidence stats
-    overconf_total = cur.execute("SELECT COUNT(*) FROM overconfidence_proxy WHERE empirical_vulnerable = 1").fetchone()[0]
+    # Overconfidence stats (only over real valid model responses)
+    overconf_total = cur.execute("SELECT COUNT(*) FROM overconfidence_proxy WHERE empirical_vulnerable = 1 AND claim_verdict IS NOT NULL").fetchone()[0]
     overconf_err = cur.execute("SELECT COUNT(*) FROM overconfidence_proxy WHERE is_overconfident = 1").fetchone()[0]
     overconf_rate = round((overconf_err / max(overconf_total, 1)) * 100, 2)
     

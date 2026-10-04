@@ -134,7 +134,8 @@ def generate_overconfidence_summary():
         writer = csv.writer(f)
         writer.writerow(["Model", "Three_Pillar_Cell", "Evaluations_Count", "Mean_Self_Assessed_Confidence"])
         for r in cross_rows:
-            writer.writerow([r[0], r[1], r[2], round(r[3], 3)])
+            avg_c = round(r[3], 3) if r[3] is not None else "N/A"
+            writer.writerow([r[0], r[1], r[2], avg_c])
 
     conn.close()
     print(f"Summary JSON saved to:               {out_json}")

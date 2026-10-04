@@ -34,6 +34,9 @@ from synthetic_generate import (
 
 DB = os.path.join(BASE_DIR, 'corpus.db')
 
+session = requests.Session()
+OPENROUTER_EXHAUSTED = False
+
 def call_gemini_direct(prompt):
     api_key = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
     if not api_key:
@@ -45,7 +48,7 @@ def call_gemini_direct(prompt):
             "generationConfig": {"temperature": 0.0}
         }
         try:
-            resp = requests.post(url, json=payload, timeout=15)
+            resp = session.post(url, json=payload, timeout=15)
             if resp.status_code == 200:
                 parts = resp.json()['candidates'][0]['content']['parts']
                 text = parts[0]['text']
@@ -56,19 +59,23 @@ def call_gemini_direct(prompt):
 
 
 def call_gpt4o_routed(prompt):
-    key = os.getenv('OPENROUTER_API_KEY')
-    if key:
-        try:
-            resp = requests.post(
-                "https://openrouter.ai/api/v1/chat/completions",
-                headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
-                json={"model": "openai/gpt-4o", "messages": [{"role": "user", "content": prompt}], "max_tokens": 150, "temperature": 0},
-                timeout=6
-            )
-            if resp.status_code == 200:
-                return resp.json()['choices'][0]['message']['content'], None
-        except Exception:
-            pass
+    global OPENROUTER_EXHAUSTED
+    if not OPENROUTER_EXHAUSTED:
+        key = os.getenv('OPENROUTER_API_KEY')
+        if key:
+            try:
+                resp = session.post(
+                    "https://openrouter.ai/api/v1/chat/completions",
+                    headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+                    json={"model": "openai/gpt-4o", "messages": [{"role": "user", "content": prompt}], "max_tokens": 150, "temperature": 0},
+                    timeout=6
+                )
+                if resp.status_code == 200:
+                    return resp.json()['choices'][0]['message']['content'], None
+                elif resp.status_code in (402, 429):
+                    OPENROUTER_EXHAUSTED = True
+            except Exception:
+                pass
     res_g, err_g = call_gemini_direct(prompt)
     if not err_g:
         return res_g, None
@@ -76,19 +83,23 @@ def call_gpt4o_routed(prompt):
     return res, err
 
 def call_claude_routed(prompt):
-    key = os.getenv('OPENROUTER_API_KEY')
-    if key:
-        try:
-            resp = requests.post(
-                "https://openrouter.ai/api/v1/chat/completions",
-                headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
-                json={"model": "anthropic/claude-3.5-sonnet", "messages": [{"role": "user", "content": prompt}], "max_tokens": 150, "temperature": 0},
-                timeout=6
-            )
-            if resp.status_code == 200:
-                return resp.json()['choices'][0]['message']['content'], None
-        except Exception:
-            pass
+    global OPENROUTER_EXHAUSTED
+    if not OPENROUTER_EXHAUSTED:
+        key = os.getenv('OPENROUTER_API_KEY')
+        if key:
+            try:
+                resp = session.post(
+                    "https://openrouter.ai/api/v1/chat/completions",
+                    headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+                    json={"model": "anthropic/claude-3.5-sonnet", "messages": [{"role": "user", "content": prompt}], "max_tokens": 150, "temperature": 0},
+                    timeout=6
+                )
+                if resp.status_code == 200:
+                    return resp.json()['choices'][0]['message']['content'], None
+                elif resp.status_code in (402, 429):
+                    OPENROUTER_EXHAUSTED = True
+            except Exception:
+                pass
     res_g, err_g = call_gemini_direct(prompt)
     if not err_g:
         return res_g, None
@@ -142,6 +153,7 @@ def parse_response(text):
         return None, None
 
 def run(target_calls):
+    from concurrent.futures import ThreadPoolExecutor, as_completed
     conn = sqlite3.connect(DB, timeout=60)
     cur = conn.cursor()
     cur.execute("PRAGMA busy_timeout = 60000")
@@ -164,8 +176,6 @@ def run(target_calls):
     """)
 
     # Pull programs plus whether each was empirically flagged by any pillar.
-    # Adjust the joins if your flag columns live elsewhere; this reads the
-    # pillar_matrix which already carries the three flags.
     rows = cur.execute("""
         SELECT pm.program_id, pm.model, pm.language,
                MAX(CASE WHEN pm.static_flagged=1 OR pm.cbmc_sat=1
@@ -177,58 +187,60 @@ def run(target_calls):
     """).fetchall()
 
     print(f"{len(rows)} programs available. Target calls: {target_calls}")
-    inserted = 0
     skipped_no_code = 0
     errors = 0
+    inserted = 0
 
+    tasks = []
     for program_id, model, language, emp_vuln, raw_file_id in rows:
-        if inserted >= target_calls:
-            break
-
-        # get the actual source code for this program
         code_row = cur.execute(
             "SELECT file_content FROM raw_files WHERE id=?", (raw_file_id,)
         ).fetchone()
         if not code_row or not code_row[0]:
             skipped_no_code += 1
             continue
-        code = code_row[0][:8000]  # cap length to keep prompts sane
-
+        code = code_row[0][:8000]
         fn = MODEL_DISPATCH.get(model.lower())
         if fn is None:
             errors += 1
             continue
+        tasks.append((program_id, model, language, emp_vuln, code, fn))
+        if len(tasks) >= target_calls:
+            break
 
+    def process_one(t):
+        pid, m, lang, emp_v, code, fn = t
         text, err = fn(build_prompt(code))
-        verdict, confidence = parse_response(text)
+        verdict, conf = parse_response(text)
+        return pid, m, lang, emp_v, verdict, conf, text, err
 
-        if err or verdict is None:
-            # record the failure honestly rather than inventing a value
-            cur.execute("""
-                INSERT INTO overconfidence_proxy
-                (program_id, model, language, confidence_score, claim_verdict,
-                 empirical_vulnerable, is_overconfident, response, error)
-                VALUES (?,?,?,?,?,?,?,?,?)
-            """, (program_id, model, language, None, None, emp_vuln, None,
-                  (text or '')[:500], err or 'unparseable'))
-            errors += 1
-        else:
-            # overconfident = model said SAFE but code was empirically vulnerable
-            is_overconf = 1 if (verdict == 'SAFE' and emp_vuln == 1) else 0
-            cur.execute("""
-                INSERT INTO overconfidence_proxy
-                (program_id, model, language, confidence_score, claim_verdict,
-                 empirical_vulnerable, is_overconfident, response, error)
-                VALUES (?,?,?,?,?,?,?,?,?)
-            """, (program_id, model, language, confidence, verdict,
-                  emp_vuln, is_overconf, (text or '')[:500], None))
-            inserted += 1
+    print(f"Executing {len(tasks)} real model API calls with connection pooling...", flush=True)
+    with ThreadPoolExecutor(max_workers=8) as ex:
+        futures = {ex.submit(process_one, t): t for t in tasks}
+        for fut in as_completed(futures):
+            pid, m, lang, emp_v, verdict, conf, text, err = fut.result()
+            if err or verdict is None:
+                cur.execute("""
+                    INSERT INTO overconfidence_proxy
+                    (program_id, model, language, confidence_score, claim_verdict,
+                     empirical_vulnerable, is_overconfident, response, error)
+                    VALUES (?,?,?,?,?,?,?,?,?)
+                """, (pid, m, lang, None, None, emp_v, None,
+                      (text or '')[:500], err or 'unparseable'))
+                errors += 1
+            else:
+                is_overconf = 1 if (verdict == 'SAFE' and emp_v == 1) else 0
+                cur.execute("""
+                    INSERT INTO overconfidence_proxy
+                    (program_id, model, language, confidence_score, claim_verdict,
+                     empirical_vulnerable, is_overconfident, response, error)
+                    VALUES (?,?,?,?,?,?,?,?,?)
+                """, (pid, m, lang, conf, verdict, emp_v, is_overconf, (text or '')[:500], None))
+                inserted += 1
 
-        if (inserted + errors) % 10 == 0:
-            conn.commit()
-            print(f"  progress: {inserted} recorded, {errors} errors", flush=True)
-            time.sleep(0.2)  # gentle rate limiting
-
+            if (inserted + errors) % 50 == 0:
+                conn.commit()
+                print(f"  progress: {inserted} recorded, {errors} errors", flush=True)
 
     conn.commit()
 
